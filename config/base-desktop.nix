@@ -27,7 +27,7 @@
     firewall.allowPing = false;
     hostId = builtins.substring 0 8 (builtins.hashString "md5" config.networking.hostName);
     nameservers = [ "1.1.1.1" ];
-    useDHCP = true;
+    useDHCP = false;
     networkmanager.enable = true;
   };
 
@@ -79,7 +79,7 @@
     openssh.enable = false;
     openssh.passwordAuthentication = false;
     printing.enable = true;
-    tlp.enable = true;
+    # tlp.enable = true;
   };
   services.xserver.deviceSection = ''
     Option "VariableRefresh" "true"
@@ -101,11 +101,11 @@
     pulse.enable = true;
   };
 
-  xdg.portal = {
-    enable = true;
-    #gtkUsePortal = true;
-    extraPortals = with pkgs; [ xdg-desktop-portal-wlr xdg-desktop-portal-gtk ];
-  };
+  # xdg.portal = {
+  #   enable = true;
+  #   #gtkUsePortal = true;
+  #   extraPortals = with pkgs; [ xdg-desktop-portal-wlr xdg-desktop-portal-gtk ];
+  # };
 
   hardware = {
     enableRedistributableFirmware = true;

@@ -22,22 +22,32 @@
   swapDevices =
     [ { device = "/dev/disk/by-uuid/2372eb49-3cfa-4e1b-b0ee-41fd87617dde"; }
     ];
-  
+
   boot.initrd.luks.devices.luksroot = {
       device = "/dev/disk/by-uuid/ff13d863-af23-4d69-bd64-b28a0de4ddb6";
       preLVM = true;
       allowDiscards = true;
   };
 
-  programs.ssh.startAgent = flase;
+  programs.ssh.startAgent = false;
   # programs.dconf.enable = true;
 
   hardware.bluetooth.enable = true;
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  hardware.pulseaudio.enable = false;
+
+  services.xserver = {
+    enable = true;
+    layout = "us";
+    displayManager.gdm.enable = true;
+    displayManager.gdm.wayland = false;
+  };
+
+  services.xserver.desktopManager.gnome.enable = true;
 
   # high-resolution display
   hardware.video.hidpi.enable = lib.mkDefault true;
-  
+
   environment.variables = {
     BROWSER = "firefox";
     TERMINAL = "alacritty";
@@ -47,20 +57,16 @@
     brave
     discord
     firefox
-    g-alacritty
+    alacritty
     gnome3.eog
     pavucontrol
     vlc
     xdg-utils # Multiple packages depend on xdg-open at runtime. This includes Discord and JetBrains
-    pulseaudio
     chromium
     exodus
-    discord-for-poor-people
-    element-for-poor-people
     rnix-lsp
     distrobox
     obs-studio
-    tdesktop
   ];
 
   networking.firewall.checkReversePath = "loose";

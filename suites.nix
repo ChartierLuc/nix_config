@@ -9,7 +9,7 @@ let
     ./config/dev.nix
  ];
 
-  sharedmodules = with nixosModules; [
+  sharedModules = with nixosModules; [
     # clean-home
     personal
    
@@ -19,7 +19,7 @@ let
    }
   ];
 
-  desktopModules = nixosModules; [
+  desktopModules = with nixosModules; [
     base-desktop
     cli
 

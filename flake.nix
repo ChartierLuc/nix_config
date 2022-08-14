@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = github:nixos/nixpkgs/nixos-unstable;
-    unstable.follows = "nixpkgs";
+    nstable.follows = "nixpkgs";
 
     utils.url = github:gytis-ivaskevicius/flake-utils-plus;
     devshell.url = github:numtide/devshell;
@@ -33,13 +33,19 @@
       url = "github:nix-community/NixOS-WSL";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    forgit-git = {
+      url = github:wfxr/forgit;
+      flake = false;
+    };
+
   };
 
-  outputs = inputs@{ self, nix2vim, utils, home-manager, ... }:
+  outputs = inputs@{ self, nixos-wsl, nix2vim, agenix, utils, home-manager, ... }:
     let
       pkgs = self.pkgs.x86_64-linux.nixpkgs;
       mkApp = utils.lib.mkApp;
-      suites = import ./suites.nix { inherit utils: }:
+      suites = import ./suites.nix { inherit utils; };
     in
     with suites.nixosModules;
     utils.lib.mkFlake {
@@ -80,13 +86,15 @@
 
         packages = {
           inherit
-            riced-alacritty
-            riced-firefox
-            riced-neovim
+            alacritty
+            # riced-firefox
+            firefox
+            neovim
+            shell-config
             ;
         };
 
-        devshell = mkShell {
+        devShell = mkShell {
           buildInputs = [ git ];
         };
       };

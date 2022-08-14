@@ -24,10 +24,10 @@
     shellInit = ''
       source ${pkgs.zsh-forgit}/share/zsh-forgit/forgit.plugin.zsh
     '';
-    promptInit = ''
-      ${builtins.readFile (pkgs.shell-config.override { dockerAliasEnabled = config.virtualisation.docker.enable; })}
-      autoload -U promptinit && promptinit && prompt pure
-    '';
+    # promptInit = ''
+    #   ${builtins.readFile (pkgs.shell-config.override { dockerAliasEnabled = config.virtualisation.docker.enable; })}
+    #   autoload -U promptinit && promptinit && prompt pure
+    # '';
 
     setOptions = [
       "AUTO_CD"

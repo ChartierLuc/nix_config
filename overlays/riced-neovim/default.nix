@@ -19,17 +19,16 @@
 }:
 let
   inherit (lib) optionals optional optionalString;
-  vim-camelsnek = vimUtils.buildVimPluginFrom2Nix {
-    pname = "vim-camelsnek";
-    version = "master";
-    src = srcs.vim-camelsnek;
-  };
+  # vim-camelsnek = vimUtils.buildVimPluginFrom2Nix {
+  #   pname = "vim-camelsnek";
+  #   version = "master";
+  #   src = srcs.vim-camelsnek;
+  # };
 in
 wrapNeovim neovim-unwrapped {
   viAlias = true;
   vimAlias = true;
   withNodeJs = true;
-  withPython = false;
   withPython3 = true;
   withRuby = false;
 
@@ -56,7 +55,7 @@ wrapNeovim neovim-unwrapped {
     packages.myVimPackage = with vimPlugins; {
 
       start = [
-        vim-camelsnek
+        # vim-camelsnek
         vim-devicons
         vim-nix
       ]
