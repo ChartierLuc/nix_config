@@ -5,7 +5,7 @@ with pkgs;
 let
   browser = [ "firefox.desktop" ];
   #browser = [ "chromium-browser.desktop" ];
-  # browser = [ "brave-browser.desktop" ];
+  #browser = [ "brave-browser.desktop" ];
   associations = {
     "text/html" = browser;
     "x-scheme-handler/http" = browser;
@@ -30,11 +30,11 @@ let
     "application/pdf" = browser; # ".pdf"  Adobe Portable Document Format (PDF)
     # "x-scheme-handler/tg" = "userapp-Telegram Desktop-95VAQ1.desktop";
   };
+
 in
 {
   home.stateVersion = "22.05";
   home.keyboard.options = [ "terminate:ctrl_alt_bksp" "caps:escape" "altwin:swap_alt_win" ];
-
 
   services.network-manager-applet.enable = true;
 
@@ -54,8 +54,8 @@ in
     enable = true;
     iconTheme.package = pkgs.papirus-icon-theme;
     iconTheme.name = "ePapirus";
-    theme.package = pkgs.layan-gtk-theme;
-    theme.name = "Layan-light-solid";
+    theme.package = pkgs.palenight-theme;
+    theme.name = "palenight";
     font.name = "Roboto";
     font.package = pkgs.noto-fonts;
     gtk3.extraConfig = {
@@ -70,14 +70,12 @@ in
     xdg-utils # Multiple packages depend on xdg-open at runtime. This includes Discord and JetBrains
     brave
     gnome3.nautilus
-    discord
     firefox
-    g-alacritty
+    rice-alacritty
     gnome3.eog
     pavucontrol
     vlc
   ];
-
 
   systemd.user.services.polkit-gnome = {
     Unit = {
@@ -94,5 +92,4 @@ in
       WantedBy = [ "graphical-session.target" ];
     };
   };
-
 }

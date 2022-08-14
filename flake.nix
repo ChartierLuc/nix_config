@@ -10,11 +10,12 @@
     devshell.inputs.nixpkgs.follows = "nixpkgs";
     devshell.inputs.flake-utils.follows = "utils";
 
+    # nix2vim is a neovim lua configuration parser.
     nix2vim.url = github:gytis-ivaskevicius/nix2vim;
     nix2vim.inputs.nixpkgs.follows = "nixpkgs";
     nix2vim.inputs.flake-utils.follows = "utils";
 
-    # home-manager pins nixpkgs to a specific version in its flake.
+    # home-majnager pins nixpkgs to a specific version in its flake.
     # we want to make sure everything pins to the same version of nixpkgs to be more efficient
     home-manager = {
       url = github:nix-community/home-manager;
@@ -86,10 +87,9 @@
 
         packages = {
           inherit
-            alacritty
-            # riced-firefox
-            firefox
-            neovim
+            riced-alacritty
+            riced-firefox
+            riced-neovim
             shell-config
             ;
         };

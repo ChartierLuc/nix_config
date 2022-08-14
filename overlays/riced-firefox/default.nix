@@ -56,7 +56,7 @@ let
     "network.allow-experiments" = false;
     "privacy.donottrackheader.enabled" = true;
     "signon.rememberSignons" = false;
-    #"browser.startup.homepage" = "https://nixos.org";
+    "browser.startup.homepage" = "https://google.com";
     #"extensions.pocket.enabled" = false;
     #"extensions.update.enabled" = false;
     #"widget.wayland-dmabuf-vaapi.enabled" = true;
@@ -142,32 +142,32 @@ let
 
   };
 
-  extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-    #    audio-fingerprint-defender
-    #    bitwarden
-    #    browserpass
-    #    canvas-fingerprint-defender
-    #    certificate_pinner
-    #    dark-reader
-    #    darkreader
-    #    font-fingerprint-defender
-    #    foxyproxy-standard
-    #    https-everywhere
-    #    languagetool
-    #    lastpass-password-manager
-    #    link-cleaner
-    #    org-capture
-    #    privacy-badger
-    #    reddit-enhancement-suite
-    #    sidebery
-    #    stylus
-    ublock-origin
-    #    unpaywall
-    #    user-agent-switcher
-    #    vim-vixen
-    vimium
-    #    webgl-fingerprint-defender
-  ];
+  # extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+  #   #    audio-fingerprint-defender
+  #       bitwarden
+  #   #    browserpass
+  #   #    canvas-fingerprint-defender
+  #   #    certificate_pinner
+  #   #    dark-reader
+  #   #    darkreader
+  #   #    font-fingerprint-defender
+  #   #    foxyproxy-standard
+  #   #    https-everywhere
+  #   #    languagetool
+  #   #    lastpass-password-manager
+  #   #    link-cleaner
+  #   #    org-capture
+  #   #    privacy-badger
+  #   #    reddit-enhancement-suite
+  #   #    sidebery
+  #   #    stylus
+  #   ublock-origin
+  #   #    unpaywall
+  #   #    user-agent-switcher
+  #   #    vim-vixen
+  #   vimium
+  #   #    webgl-fingerprint-defender
+  # ];
 
 in
 wrapFirefox firefox-unwrapped {
@@ -201,6 +201,11 @@ wrapFirefox firefox-unwrapped {
     #SearchBar = "unified";
     #PictureInPicture.Enabled = false;
     #PasswordManagerEnabled = false;
+    Extensions.Install = [
+      "https://addons.mozilla.org/firefox/downloads/file/3961087/ublock_origin-1.43.0.xpi"
+      "https://addons.mozilla.org/firefox/downloads/file/3486377/animated_matrix_gif-1.0.xpi"
+      "https://addons.mozilla.org/firefox/downloads/file/3987418/darkreader-4.9.55.xpi"
+    ];
     NoDefaultBookmarks = false;
     DontCheckDefaultBrowser = true;
     DisableSetDesktopBackground = true;

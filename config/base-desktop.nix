@@ -7,7 +7,7 @@
   i18n.defaultLocale = "en_US.UTF-8";
   nix.settings.auto-optimise-store = true;
   system.stateVersion = "22.05";
-  time.timeZone = "Chicago/America";
+  time.timeZone = "NewYork/America";
 
   # gytix.cachix.enable = true;
   # gytix.cleanHome.enable = true;
@@ -64,7 +64,7 @@
     # loader.systemd-boot.enable = true;
     loader.grub.enable = true;
     loader.grub.version =2;
-    loader.grub.device = "nodev";  
+    loader.grub.device = "nodev";
     loader.grub.efiSupport = true;
     loader.timeout = 2;
     loader.efi.canTouchEfiVariables = true;
@@ -121,6 +121,6 @@
       #extraPackages32 = with pkgs; [ driversi686Linux.amdvlk ];
     };
     cpu.amd.updateMicrocode = true;
-    #cpu.intel.updateMicrocode = true;
+    cpu.intel.updateMicrocode = true;
   };
 }

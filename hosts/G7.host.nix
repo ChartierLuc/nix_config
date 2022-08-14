@@ -41,9 +41,10 @@
     layout = "us";
     displayManager.gdm.enable = true;
     displayManager.gdm.wayland = false;
+    desktopManager.gnome.enable = true;
+    videoDrivers = [ "modesetting" ];
+    useGlamor = true;
   };
-
-  services.xserver.desktopManager.gnome.enable = true;
 
   # high-resolution display
   hardware.video.hidpi.enable = lib.mkDefault true;
@@ -54,19 +55,19 @@
   };
 
   environment.systemPackages = with pkgs; [
-    brave
-    discord
+    #brave
+    #discord
     firefox
-    alacritty
+    riced-alacritty
     gnome3.eog
     pavucontrol
     vlc
     xdg-utils # Multiple packages depend on xdg-open at runtime. This includes Discord and JetBrains
     chromium
-    exodus
-    rnix-lsp
-    distrobox
-    obs-studio
+    #exodus
+    #rnix-lsp
+    #distrobox
+    #obs-studio
   ];
 
   networking.firewall.checkReversePath = "loose";
