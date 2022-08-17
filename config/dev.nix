@@ -6,7 +6,7 @@
   environment.systemPackages = with pkgs; [
     gradle
     insomnia
-    jetbrains.idea-ultimate
+    vscode
     maven
     #podman-compose
     nomad

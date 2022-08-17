@@ -7,10 +7,6 @@
   i18n.defaultLocale = "en_US.UTF-8";
   nix.settings.auto-optimise-store = true;
   system.stateVersion = "22.05";
-  time.timeZone = "NewYork/America";
-
-  # gytix.cachix.enable = true;
-  # gytix.cleanHome.enable = true;
 
   systemd.tmpfiles.rules = [
     "L+ /lib64/ld-linux-x86-64.so.2 - - - - ${pkgs.glibc}/lib64/ld-linux-x86-64.so.2"
@@ -33,13 +29,6 @@
 
   environment.systemPackages = [ pkgs.bluez ];
 
-  #services.resolved = {
-  #  enable = true;
-  #  extraConfig = ''
-  #    DNS=1.1.1.1 1.0.0.1 127.0.0.1:12299 127.0.0.1:12298
-  #  '';
-  #};
-
   programs.ssh.startAgent = false;
 
   nix.gc = {
@@ -61,7 +50,7 @@
     #zfs.enableUnstable = true;
     kernelParams = [ "quiet" "loglevel=3" ];
     cleanTmpDir = true;
-    # loader.systemd-boot.enable = true;
+
     loader.grub.enable = true;
     loader.grub.version =2;
     loader.grub.device = "nodev";
@@ -71,6 +60,14 @@
     loader.grub.gfxmodeEfi = "1024x768";
     tmpOnTmpfs = true;
   };
+
+   services.xserver = {
+    enable = true;
+    layout = "us";
+    displayManager.gdm.enable = true;
+    displayManager.gdm.wayland = false;
+    desktopManager.gnome.enable = true;
+   };
 
   services = {
     dbus.packages = with pkgs; [ dconf ];
@@ -85,7 +82,6 @@
     Option "VariableRefresh" "true"
   '';
 
-  # zramSwap.enable = true;
 
   fonts = {
     enableDefaultFonts = true;
@@ -101,12 +97,6 @@
     pulse.enable = true;
   };
 
-  # xdg.portal = {
-  #   enable = true;
-  #   #gtkUsePortal = true;
-  #   extraPortals = with pkgs; [ xdg-desktop-portal-wlr xdg-desktop-portal-gtk ];
-  # };
-
   hardware = {
     enableRedistributableFirmware = true;
     enableAllFirmware = true;
@@ -120,7 +110,6 @@
       #];
       #extraPackages32 = with pkgs; [ driversi686Linux.amdvlk ];
     };
-    cpu.amd.updateMicrocode = true;
     cpu.intel.updateMicrocode = true;
   };
 }

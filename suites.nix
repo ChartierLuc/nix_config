@@ -1,8 +1,6 @@
 { utils }:
 let
   nixosModules = utils.lib.exportModules [
-    ./modules/clean-home.nix
-
     ./config/base-desktop.nix
     ./config/cli.nix
     ./config/personal.nix

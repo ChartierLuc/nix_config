@@ -196,7 +196,7 @@
         "nix2vim": "nix2vim",
         "nixos-wsl": "nixos-wsl",
         "nixpkgs": "nixpkgs",
-        "nstable": [
+        "unstable": [
           "nixpkgs"
         ],
         "utils": "utils_2"

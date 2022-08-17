@@ -21,9 +21,10 @@
     syntaxHighlighting.highlighters = [ "main" "brackets" "pattern" "root" "line" ];
     ohMyZsh.enable = true;
     ohMyZsh.plugins = [ "sudo" "z" ];
-    shellInit = ''
-      source ${pkgs.zsh-forgit}/share/zsh-forgit/forgit.plugin.zsh
-    '';
+    ohMyZsh.theme = "agnoster";
+    # shellInit = ''
+    #   source ${pkgs.zsh-forgit}/share/zsh-forgit/forgit.plugin.zsh
+    # '';
     # promptInit = ''
     #   ${builtins.readFile (pkgs.shell-config.override { dockerAliasEnabled = config.virtualisation.docker.enable; })}
     #   autoload -U promptinit && promptinit && prompt pure
@@ -107,13 +108,11 @@
     htop
     inetutils
     iotop
-    jq
     lm_sensors
     lshw
     lsof
     man
     nettools
-    nix-top
     nix-tree
     nix2vimDemo
     nixpkgs-fmt

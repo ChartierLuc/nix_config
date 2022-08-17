@@ -68,9 +68,8 @@ in
 
   home.packages = with pkgs; [
     xdg-utils # Multiple packages depend on xdg-open at runtime. This includes Discord and JetBrains
-    brave
     gnome3.nautilus
-    firefox
+    rice-firefox
     rice-alacritty
     gnome3.eog
     pavucontrol

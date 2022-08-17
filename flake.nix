@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = github:nixos/nixpkgs/nixos-unstable;
-    nstable.follows = "nixpkgs";
+    unstable.follows = "nixpkgs";
 
     utils.url = github:gytis-ivaskevicius/flake-utils-plus;
     devshell.url = github:numtide/devshell;

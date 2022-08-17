@@ -6,6 +6,8 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
+  time.timeZone = "NewYork/America";
+
   # SSD health
   fileSystems."/".options = [ "noatime" "nodiratime" "discard" ];
 
@@ -37,11 +39,6 @@
   hardware.pulseaudio.enable = false;
 
   services.xserver = {
-    enable = true;
-    layout = "us";
-    displayManager.gdm.enable = true;
-    displayManager.gdm.wayland = false;
-    desktopManager.gnome.enable = true;
     videoDrivers = [ "modesetting" ];
     useGlamor = true;
   };

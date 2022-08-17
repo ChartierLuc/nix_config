@@ -142,32 +142,32 @@ let
 
   };
 
-  # extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-  #   #    audio-fingerprint-defender
-  #       bitwarden
-  #   #    browserpass
-  #   #    canvas-fingerprint-defender
-  #   #    certificate_pinner
-  #   #    dark-reader
-  #   #    darkreader
-  #   #    font-fingerprint-defender
-  #   #    foxyproxy-standard
-  #   #    https-everywhere
-  #   #    languagetool
-  #   #    lastpass-password-manager
-  #   #    link-cleaner
-  #   #    org-capture
-  #   #    privacy-badger
-  #   #    reddit-enhancement-suite
-  #   #    sidebery
-  #   #    stylus
-  #   ublock-origin
-  #   #    unpaywall
-  #   #    user-agent-switcher
-  #   #    vim-vixen
-  #   vimium
-  #   #    webgl-fingerprint-defender
-  # ];
+  #extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+    #    audio-fingerprint-defender
+    #    bitwarden
+    #    browserpass
+    #    canvas-fingerprint-defender
+    #    certificate_pinner
+    #    dark-reader
+    #    darkreader
+    #    font-fingerprint-defender
+    #    foxyproxy-standard
+    #    https-everywhere
+    #    languagetool
+    #    lastpass-password-manager
+    #    link-cleaner
+    #    org-capture
+    #   privacy-badger
+    #    reddit-enhancement-suite
+    #    sidebery
+    #    stylus
+    # ublock-origin
+    #    unpaywall
+    #    user-agent-switcher
+    #    vim-vixen
+    #vimium
+    #    webgl-fingerprint-defender
+  #];
 
 in
 wrapFirefox firefox-unwrapped {
