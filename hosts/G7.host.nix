@@ -65,7 +65,9 @@
     #rnix-lsp
     #distrobox
     #obs-studio
-  ];
+    gnomeExtensions.hide-top-bar
+    gnomeExtensions.burn-my-windows  
+    ];
 
   networking.firewall.checkReversePath = "loose";
 

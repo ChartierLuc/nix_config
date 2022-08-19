@@ -1,13 +1,20 @@
 
+selection:
+  semantic_escape_chars: ",|`:\"` ()[]{}<>\t"
+  save_to_clipboard: true
+
+
 scrolling:
   history: 100000
 
 draw_bold_text_with_bright_colors: true
 
 colors:
+
   primary:
-    background: '#171717'
-    foreground: '#F8F8F8'
+    background: '#000000'
+    foreground: '#eaeaea'
+
 
   search:
     matches:
@@ -20,25 +27,30 @@ colors:
       background: '#D81765'
       foreground: '#FFFFFF'
 
+    # Colors (Tomorrow Night Bright)
+colors:
+  # Default colors
+   # Normal colors
   normal:
-    black:   '#171717'
-    red:     '#D81765'
-    green:   '#97D01A'
-    yellow:  '#FFA800'
-    blue:    '#16B1FB'
-    magenta: '#FF2491'
-    cyan:    '#0FDCB6'
-    white:   '#EBEBEB'
+    black:   '#000000'
+    red:     '#d54e53'
+    green:   '#b9ca4a'
+    yellow:  '#e6c547'
+    blue:    '#7aa6da'
+    magenta: '#c397d8'
+    cyan:    '#70c0ba'
+    white:   '#424242'
 
+  # Bright colors
   bright:
-    black:   '#38252C'
-    red:     '#FF0000'
-    green:   '#76B639'
-    yellow:  '#E1A126'
-    blue:    '#289CD5'
-    magenta: '#FF2491'
-    cyan:    '#0A9B81'
-    white:   '#F8F8F8'
+    black:   '#666666'
+    red:     '#ff3334'
+    green:   '#9ec400'
+    yellow:  '#e7c547'
+    blue:    '#7aa6da'
+    magenta: '#b77ee0'
+    cyan:    '#54ced6'
+    white:   '#2a2a2a'
 
 live_config_reload: true
 
