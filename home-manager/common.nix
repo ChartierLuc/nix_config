@@ -54,8 +54,8 @@ in
     enable = true;
     iconTheme.package = pkgs.papirus-icon-theme;
     iconTheme.name = "ePapirus";
-    theme.package = pkgs.palenight-theme;
-    theme.name = "palenight";
+    theme.package = pkgs.whiplash-gtk-theme;
+    theme.name = "Whiplash-GTK-Darkest";
     font.name = "Roboto";
     font.package = pkgs.noto-fonts;
     gtk3.extraConfig = {
