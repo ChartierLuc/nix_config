@@ -28,7 +28,6 @@ colors:
       foreground: '#FFFFFF'
 
     # Colors (Tomorrow Night Bright)
-colors:
   # Default colors
    # Normal colors
   normal:

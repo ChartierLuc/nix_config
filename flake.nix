@@ -58,7 +58,7 @@
 
       channels.nixpkgs.overlaysBuilder = channels: [
         (final: prev: {
-          #inherit (channels.unstable) pure-prompt neovim-unwrapped linuxPackages_latest gcc11Stdenv layan-gtk-theme;
+          inherit (channels.unstable) pure-prompt neovim-unwrapped linuxPackages_latest gcc11Stdenv layan-gtk-theme;
         })
       ];
 
