@@ -54,10 +54,10 @@ in
     enable = true;
     iconTheme.package = pkgs.papirus-icon-theme;
     iconTheme.name = "ePapirus";
-    theme.package = pkgs.whiplash-gtk-theme;
-    theme.name = "Whiplash-GTK-Darkest";
+    theme.package = pkgs.solarc-gtk-theme;
+    theme.name = "SolArc-Dark";
     font.name = "Roboto";
-    font.package = pkgs.noto-fonts;
+    font.package = pkgs.ibm-plex;
     gtk3.extraConfig = {
       gtk-application-prefer-dark-theme = true;
       gtk-button-images = false;
@@ -69,11 +69,13 @@ in
   home.packages = with pkgs; [
     xdg-utils # Multiple packages depend on xdg-open at runtime. This includes Discord and JetBrains
     gnome3.nautilus
-    rice-firefox
-    rice-alacritty
+#    rice-firefox
+#    rice-alacritty
     gnome3.eog
-    pavucontrol
-    vlc
+ #   pavucontrol
+    #vlc
+    neofetch
+    whiplash-gtk-theme
   ];
 
   systemd.user.services.polkit-gnome = {

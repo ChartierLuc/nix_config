@@ -82,6 +82,8 @@
     Option "VariableRefresh" "true"
   '';
 
+  programs.dconf.enable = true;
+
 
   fonts = {
     enableDefaultFonts = true;

@@ -8,6 +8,7 @@
 , gtk3
 , inkscape
 , optipng
+, gtk-engine
 , gtk-engine-murrine
 , gdk-pixbuf
 , librsvg

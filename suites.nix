@@ -10,7 +10,7 @@ let
   sharedModules = with nixosModules; [
     # clean-home
     personal
-   
+
    {
      home-manager.useGlobalPkgs = true;
      home-manager.useUserPackages = true;
