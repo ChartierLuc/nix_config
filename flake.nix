@@ -42,7 +42,7 @@
 
   };
 
-  outputs = inputs@{ self, nixos-wsl, nix2vim, agenix, utils, home-manager, ... }:
+  outputs = { self, nixos-wsl, nix2vim, agenix, utils, home-manager, ... }@inputs: {
     let
       pkgs = self.pkgs.x86_64-linux.nixpkgs;
       mkApp = utils.lib.mkApp;
@@ -70,9 +70,13 @@
         ./hosts/G7.host.nix
       ];
 
+      # hosts.Flyover.modules = suites.wsl ++
+      # [
+      #   ./hosts/Flyover.host.nix
+      # ];
+
       sharedOverlays = [
         self.overlay
-        nix2vim.overlay
         (final: prev: {
           firefox = prev.riced-firefox;
         })
