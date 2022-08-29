@@ -67,8 +67,17 @@
           security.apparmor.enable = true;
         }
 
-        ./hosts/G7.host.nix
+        ./hosts/G7/host.nix
       ];
+      
+      hosts.miBook.modules = suites.desktopModules ++ [
+        {
+          security.apparmor.enable = true;
+        }
+        
+        ./hosts/miBook/host.nix
+      ];
+      
 
       # hosts.Flyover.modules = suites.wsl ++
       # [
