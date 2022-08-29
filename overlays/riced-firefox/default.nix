@@ -69,7 +69,7 @@ let
 
 
     # Disable some not so useful functionality.
-    "media.videocontrols.picture-in-picture.video-toggle.enabled" = false;
+    "media.videocontrols.picture-in-picture.video-toggle.enabled" = true;
     "extensions.shield-recipe-client.enabled" = false;
     "dom.battery.enabled" = false;
     # Disable "beacon" asynchronous HTTP transfers (used for analytics)

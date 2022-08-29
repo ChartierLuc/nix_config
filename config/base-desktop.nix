@@ -1,7 +1,5 @@
 { config, pkgs, lib, ... }:
 {
-  #powerManagement.powertop.enable = true;
-  powerManagement.cpuFreqGovernor = "performance";
   console.keyMap = "us";
   fileSystems."/boot".label = "BOOT";
   i18n.defaultLocale = "en_US.UTF-8";
@@ -26,8 +24,6 @@
     useDHCP = false;
     networkmanager.enable = true;
   };
-
-  environment.systemPackages = [ pkgs.bluez ];
 
   programs.ssh.startAgent = false;
 
@@ -61,14 +57,6 @@
     tmpOnTmpfs = true;
   };
 
-   services.xserver = {
-    enable = true;
-    layout = "us";
-    displayManager.gdm.enable = true;
-    displayManager.gdm.wayland = false;
-    desktopManager.gnome.enable = true;
-   };
-
   services = {
     dbus.packages = with pkgs; [ dconf ];
     zfs.autoSnapshot.enable = true;
@@ -78,9 +66,6 @@
     printing.enable = true;
     # tlp.enable = true;
   };
-  services.xserver.deviceSection = ''
-    Option "VariableRefresh" "true"
-  '';
 
   programs.dconf.enable = true;
 
@@ -114,4 +99,11 @@
     };
     cpu.intel.updateMicrocode = true;
   };
+
+  environment.systemPackages = with pkgs; [
+    slack
+    vscode
+    spotify
+  ];
+
 }

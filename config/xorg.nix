@@ -1,6 +1,20 @@
 { config, lib, pkgs, ... }:
 
 {
+   services.xserver = {
+    enable = true;
+    layout = "us";
+    displayManager.gdm.enable = true;
+    displayManager.gdm.wayland = false;
+    desktopManager.gnome.enable = true;
+   };
+
+   environment.systemPackages = with pkgs; [
+    solarc-gtk-theme
+    gtk-engine-murrine
+    gtk_engines
+  ];
+
   # xdg.mime.enable = true;
   # environment.systemPackages = with pkgs; [ xclip ];
 

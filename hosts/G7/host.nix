@@ -6,8 +6,6 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-  time.timeZone = "NewYork/America";
-
   # SSD health
   fileSystems."/".options = [ "noatime" "nodiratime" "discard" ];
 
@@ -31,7 +29,7 @@
       allowDiscards = true;
   };
 
-  programs.ssh.startAgent = false;
+  # programs.ssh.startAgent = false;
   # programs.dconf.enable = true;
 
   hardware.bluetooth.enable = true;
@@ -40,7 +38,6 @@
 
   services.xserver = {
     videoDrivers = [ "modesetting" ];
-    useGlamor = true;
   };
 
   # high-resolution display
@@ -58,7 +55,7 @@
     riced-alacritty
     gnome3.eog
     pavucontrol
-    vlc
+    #vlc
     xdg-utils # Multiple packages depend on xdg-open at runtime. This includes Discord and JetBrains
     chromium
     #exodus

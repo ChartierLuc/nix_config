@@ -42,7 +42,7 @@
 
   };
 
-  outputs = { self, nixos-wsl, nix2vim, agenix, utils, home-manager, ... }@inputs: {
+  outputs = inputs@{ self, nixos-wsl, nix2vim, agenix, utils, home-manager, ... }:
     let
       pkgs = self.pkgs.x86_64-linux.nixpkgs;
       mkApp = utils.lib.mkApp;

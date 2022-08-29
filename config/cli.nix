@@ -115,7 +115,6 @@
     man
     nettools
     nix-tree
-    nix2vimDemo
     nixpkgs-fmt
     nushell
     p7zip

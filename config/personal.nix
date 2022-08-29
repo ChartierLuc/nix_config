@@ -1,6 +1,8 @@
 { pkgs, lib, ... }:
 
 {
+  time.timeZone = "America/New_York";
+
   #services.tailscale.enable = true;
   # services.zerotierone.enable = true;
   # services.zerotierone.joinNetworks = [ "9bee8941b5c7428a" "12ac4a1e710088c5" ];
@@ -22,11 +24,5 @@
   #   extraGroups = [ "wheel" ];
   #   initialPassword = "toor";
   # };
-
-  environment.systemPackages = with pkgs; [
-    slack
-    vscode
-    spotify
-  ];
 
 }

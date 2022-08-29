@@ -5,6 +5,7 @@ let
     ./config/cli.nix
     ./config/personal.nix
     ./config/dev.nix
+    ./config/xorg.nix
  ];
 
   sharedModules = with nixosModules; [
@@ -19,6 +20,7 @@ let
 
   desktopModules = with nixosModules; [
     base-desktop
+    xorg
     cli
 
     ({ pkgs, lib, config, ...}: {

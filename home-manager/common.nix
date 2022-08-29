@@ -70,12 +70,15 @@ in
     xdg-utils # Multiple packages depend on xdg-open at runtime. This includes Discord and JetBrains
     gnome3.nautilus
 #    rice-firefox
-#    rice-alacritty
+    rice-alacritty
     gnome3.eog
  #   pavucontrol
     #vlc
     neofetch
     whiplash-gtk-theme
+    solarc-gtk-theme
+    gtk-engine-murrine
+    gtk_engines
   ];
 
   systemd.user.services.polkit-gnome = {
