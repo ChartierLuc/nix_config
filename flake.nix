@@ -29,6 +29,7 @@
 
   outputs = inputs:
     {
+      inputs.nixpkgs.overlays = [ import ./overlays/default.nix ]; 
       nixosConfigurations = {
         miBook = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
