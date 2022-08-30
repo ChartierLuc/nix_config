@@ -101,7 +101,6 @@
     exa
     fd
     file
-    fup-repl
     fzf
     gcc
     git
@@ -129,5 +128,6 @@
     wget
     which
     zip
+    vim
   ];
 }

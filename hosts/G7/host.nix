@@ -29,12 +29,8 @@
       allowDiscards = true;
   };
 
-  # programs.ssh.startAgent = false;
-  # programs.dconf.enable = true;
-
   hardware.bluetooth.enable = true;
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-  hardware.pulseaudio.enable = false;
 
   services.xserver = {
     videoDrivers = [ "modesetting" ];
@@ -62,8 +58,6 @@
     #rnix-lsp
     #distrobox
     #obs-studio
-    gnomeExtensions.hide-top-bar
-    gnomeExtensions.burn-my-windows  
     ];
 
   networking.firewall.checkReversePath = "loose";

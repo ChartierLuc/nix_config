@@ -6,6 +6,7 @@ let
     ./config/personal.nix
     ./config/dev.nix
     ./config/xorg.nix
+    ./config/oled.nix
  ];
 
   sharedModules = with nixosModules; [
@@ -22,6 +23,7 @@ let
     base-desktop
     xorg
     cli
+    oled
 
     ({ pkgs, lib, config, ...}: {
       nix.generateRegistryFromInputs = true;

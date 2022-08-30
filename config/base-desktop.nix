@@ -5,6 +5,7 @@
   i18n.defaultLocale = "en_US.UTF-8";
   nix.settings.auto-optimise-store = true;
   system.stateVersion = "22.05";
+  nixpkgs.config.allowUnfree = true;
 
   systemd.tmpfiles.rules = [
     "L+ /lib64/ld-linux-x86-64.so.2 - - - - ${pkgs.glibc}/lib64/ld-linux-x86-64.so.2"
@@ -75,7 +76,8 @@
     fonts = [ pkgs.nerdfonts ];
   };
 
-
+  # Disable pulse audio and enable pipewire
+  hardware.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -83,6 +85,7 @@
     alsa.support32Bit = true;
     pulse.enable = true;
   };
+
 
   hardware = {
     enableRedistributableFirmware = true;
@@ -97,13 +100,9 @@
       #];
       #extraPackages32 = with pkgs; [ driversi686Linux.amdvlk ];
     };
-    cpu.intel.updateMicrocode = true;
   };
 
   environment.systemPackages = with pkgs; [
-    slack
-    vscode
-    spotify
   ];
 
 }

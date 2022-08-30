@@ -50,6 +50,16 @@ in
 
   fonts.fontconfig.enable = true;
 
+  # vscode
+ programs.vscode = {
+  enable = true;
+  extensions = with pkgs.vscode-extensions; [
+    dracula-theme.theme-dracula
+    jnoortheen.nix-ide
+    # bbenoist.Nix
+  ];
+};
+
   gtk = {
     enable = true;
     iconTheme.package = pkgs.papirus-icon-theme;
@@ -79,6 +89,7 @@ in
     solarc-gtk-theme
     gtk-engine-murrine
     gtk_engines
+    vscode
   ];
 
   systemd.user.services.polkit-gnome = {

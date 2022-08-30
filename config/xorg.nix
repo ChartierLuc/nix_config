@@ -1,6 +1,11 @@
 { config, lib, pkgs, ... }:
 
 {
+  # Make qt apps look like gtk apps
+  qt5.enable = true;
+  qt5.platformTheme = "gtk2";
+  qt5.style = "gtk2";
+  
    services.xserver = {
     enable = true;
     layout = "us";
