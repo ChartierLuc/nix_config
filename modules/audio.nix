@@ -4,15 +4,23 @@
   #sound.enable = false;
   hardware.bluetooth.enable = true;
   hardware.pulseaudio.enable = false;
+  
+  # High quality Bluetooth calls
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.hsphfpd.enable = true;
+
   # rtkit is optional but recommended
   security.rtkit.enable = true;
+
+  # Pipewire Config
   services.pipewire = {
     enable = true;
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
+    jack.enable = true;
+    
+    # Bluetooth config for pipewire
     media-session.config.bluez-monitor.rules = [
       {
         # Matches all cards
