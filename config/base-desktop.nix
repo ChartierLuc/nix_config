@@ -76,17 +76,6 @@
     fonts = [ pkgs.nerdfonts ];
   };
 
-  # Disable pulse audio and enable pipewire
-  hardware.pulseaudio.enable = false;
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
-
-
   hardware = {
     enableRedistributableFirmware = true;
     enableAllFirmware = true;

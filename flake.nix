@@ -40,6 +40,7 @@
             ./config/xorg.nix
             ./config/cli.nix
             ./config/oled.nix
+            ./modules/audio.nix
           ];
           specialArgs = { inherit inputs; };
         };
