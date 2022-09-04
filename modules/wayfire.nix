@@ -19,6 +19,7 @@ config = {
 
 environment.systemPackages = [
     pkgs.wayfire
+    pkgs.waybar
   ];
 
 }
