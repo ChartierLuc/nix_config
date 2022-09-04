@@ -1,4 +1,4 @@
-{ config, builtins, lib, pkgs, nixpkgs-wayland, ... }:
+{ config, lib, pkgs, modulesPath, inputs, ... }:
 {
 config = {
           nix = {
@@ -15,11 +15,12 @@ config = {
             ];
           };
   # use it as an overlay
-  nixpkgs.overlays = [ nixpkgs-wayland.overlay ];
+  nixpkgs.overlays = [ inputs.nixpkgs-wayland.overlay ];
 
 environment.systemPackages = [
     pkgs.wayfire
     pkgs.waybar
   ];
 
+};
 }

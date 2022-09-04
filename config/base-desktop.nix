@@ -50,7 +50,7 @@
 
     loader.grub.enable = true;
     loader.grub.version =2;
-    loader.grub.device = "nodev";
+
     loader.grub.efiSupport = true;
     loader.timeout = 2;
     loader.efi.canTouchEfiVariables = true;
@@ -76,22 +76,8 @@
     fonts = [ pkgs.nerdfonts ];
   };
 
-  hardware = {
-    enableRedistributableFirmware = true;
-    enableAllFirmware = true;
-    opengl = {
-      enable = lib.mkDefault true;
-      driSupport32Bit = config.hardware.opengl.enable;
-      #extraPackages = with pkgs; [
-      #  rocm-opencl-icd
-      #  rocm-opencl-runtime
-      #  amdvlk
-      #];
-      #extraPackages32 = with pkgs; [ driversi686Linux.amdvlk ];
-    };
-  };
-
   environment.systemPackages = with pkgs; [
+  
   ];
 
 }

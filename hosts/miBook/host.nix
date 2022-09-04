@@ -1,10 +1,11 @@
 { config, builtins, lib, pkgs, modulesPath, ... }:
-
 {
-  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usb_storage" "sd_mod" ];
+  nixpkgs.config.allowUnfree = true;
+  boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usb_storage" "sd_mod" "amdgpu" ];
   boot.initrd.kernelModules = [ "dm-snapshot" ];
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
+  boot.loader.grub.device = "nodev";
   
   ## Bootloader.
   #boot.loader.efi.canTouchEfiVariables = true;
@@ -38,5 +39,17 @@
   # high-resolution display
   hardware.video.hidpi.enable = lib.mkDefault true;
   services.xserver.libinput.enable = true;
-
+  
+hardware = {
+  enableRedistributableFirmware = true;
+  enableAllFirmware = true;
+  opengl = {
+    extraPackages = with pkgs; [
+      rocm-opencl-icd
+      rocm-opencl-runtime
+      amdvlk
+    ];
+    extraPackages32 = with pkgs; [ driversi686Linux.amdvlk];
+  };
+};
 }

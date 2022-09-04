@@ -5,6 +5,9 @@
     nixpkgs.url = github:nixos/nixpkgs/nixos-unstable;
     unstable.follows = "nixpkgs";
 
+
+    nixpkgs-wayland  = { url = "github:nix-community/nixpkgs-wayland"; };
+
     # # home-majnager pins nixpkgs to a specific version in its flake.
     # # we want to make sure everything pins to the same version of nixpkgs to be more efficient
     # home-manager = {
@@ -20,30 +23,42 @@
     # };
 
     # # TODO: separate each config into its own flake to avoid pulling unnecessary deps? or is nix smart enough
-    # nixos-wsl = {
+    # nixos-wsl = {;
     #   url = "github:nix-community/NixOS-WSL";
     #   inputs.nixpkgs.follows = "nixpkgs";
     # };
-
   };
 
-  outputs = inputs:
-    {
+  outputs = inputs: {
       inputs.nixpkgs.overlays = [ import ./overlays/default.nix ]; 
-      nixosConfigurations = {
-        miBook = inputs.nixpkgs.lib.nixosSystem {
+      nixosConfigurations = { 
+        miBook = inputs.nixpkgs.lib.nixosSystem { 
           system = "x86_64-linux";
           modules = [
+            # Hardware configuration
             ./hosts/miBook/host.nix
+
+            # Device is a personal laptop
+         #  ./config/laptop.nix
             ./config/base-desktop.nix
             ./config/personal.nix
-            ./config/xorg.nix
             ./config/cli.nix
-            ./config/oled.nix
-            ./modules/audio.nix
+          
+            # Give access to network filestore
+         #  ./config/file_access.nix
+          
+          # # Use X11 Gnome
+          # ./config/xorg.nix
+          # ./config/oled_gnome.nix
+
+          # Use Wayland Wayfire
+            ./module/wayfire.nix
+
+            # Use pipewire
+            ./module/audio.nix
           ];
           specialArgs = { inherit inputs; };
         };
       };
-    };
+  };
 }

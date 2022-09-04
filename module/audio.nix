@@ -6,7 +6,6 @@
   hardware.pulseaudio.enable = false;
   
   # High quality Bluetooth calls
-  hardware.bluetooth.enable = true;
   hardware.bluetooth.hsphfpd.enable = true;
 
   # rtkit is optional but recommended
