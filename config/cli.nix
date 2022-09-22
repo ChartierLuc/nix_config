@@ -129,5 +129,6 @@
     which
     zip
     vim
+    neovim
   ];
 }

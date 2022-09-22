@@ -92,4 +92,9 @@
   
   ];
 
+  environment.variables = {
+    BROWSER = "firefox";
+    TERMINAL = "alacritty";
+  };
+
 }

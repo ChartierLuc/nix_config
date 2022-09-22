@@ -30,7 +30,7 @@
 
   };
 
-  outputs = inputs@{self, nixpkgs, emacs-overlay, home-manager, nix-doom-emacs,  ...}:
+  outputs = inputs@{self, nixpkgs, home-manager,  ...}:
   let
     user = "luc";
     system = "x86_64-linux";
@@ -87,6 +87,45 @@
           ];
           specialArgs = { inherit inputs; };
         };
+
+       G7 = inputs.nixpkgs.lib.nixosSystem { 
+        system = "x86_64-linux";
+          modules = [
+          home-manager.nixosModules.home-manager {
+            home-manager.useGlobalPkgs = true; # instead of having its own private nixpkgs
+            home-manager.useUserPackages = true; # install to /etc/profiles instead of ~/.nix-profile
+            home-manager.extraSpecialArgs = {
+              inherit user; # pass user to modules in conf (home.nix or whatever)
+              configName = "G7";
+            };
+	    home-manager.users.luc = import ./home-manager/luc.nix;
+           }
+            # Hardware configuration
+            ./hosts/miBook/host.nix
+
+            # Device is a personal laptop
+#           ./config/laptop.nix
+            ./config/base-desktop.nix
+            ./config/personal.nix
+            ./config/cli.nix
+            ./config/gui.nix
+            
+            # Give access to network filestore
+         #  ./config/file_access.nix
+          
+          # # Use X11 Gnome
+            ./config/xorg.nix
+            ./config/oled_gnome.nix
+
+          # Use Wayland Wayfire
+         #  ./module/wayfire.nix
+
+            # Use pipewire
+            ./module/audio.nix
+          ];
+          specialArgs = { inherit inputs; };
+        };
+
       };
     };
 }
