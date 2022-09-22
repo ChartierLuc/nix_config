@@ -3,7 +3,6 @@
   console.keyMap = "us";
   fileSystems."/boot".label = "BOOT";
   i18n.defaultLocale = "en_US.UTF-8";
-  nix.settings.auto-optimise-store = true;
   system.stateVersion = "22.05";
   nixpkgs.config.allowUnfree = true;
 
@@ -74,6 +73,19 @@
   fonts = {
     enableDefaultFonts = true;
     fonts = [ pkgs.nerdfonts ];
+  };
+
+  nix = {
+    package = pkgs.nixFlakes;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+      keep-outputs = true
+      keep-derivations = true
+    '';
+    settings = {
+      trusted-users = [ "root" "luc" ];
+      auto-optimise-store = true;
+    };
   };
 
   environment.systemPackages = with pkgs; [
