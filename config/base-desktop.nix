@@ -89,7 +89,11 @@
   };
 
   environment.systemPackages = with pkgs; [
-  
+    firefox
+    alacritty
+    thunderbird
+    keepassxc
+    emacs
   ];
 
   environment.variables = {

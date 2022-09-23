@@ -10,7 +10,6 @@ let
  ];
 
   sharedModules = with nixosModules; [
-    # clean-home
     personal
 
    {

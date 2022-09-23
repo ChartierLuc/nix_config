@@ -1,4 +1,4 @@
-{ pkgs, nix-doom-emacs, ... }:
+{ pkgs, ... }:
 {
   home.stateVersion = "22.05";
 }
