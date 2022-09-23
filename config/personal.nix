@@ -15,6 +15,12 @@
     description = "Luc Chartier";
     extraGroups = [ "audio" "video" "dialout" "adbusers" "wheel" "networkmanager" "docker" "vboxusers" ];
     initialPassword = "toor";
+    packages = with pkgs; [
+      firefox
+      thunderbird
+      vscode
+      nextcloud-client
+    ];
   };
 
   # users.extraUsers.guest = {

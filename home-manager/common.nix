@@ -90,6 +90,7 @@ in
     gtk-engine-murrine
     gtk_engines
     vscode
+    nextcloud-client
   ];
 
   systemd.user.services.polkit-gnome = {

@@ -89,11 +89,14 @@
   };
 
   environment.systemPackages = with pkgs; [
-    firefox
+    #firefox
     alacritty
-    thunderbird
-    keepassxc
-    emacs
+    xdg-utils # Multiple packages depend on xdg-open at runtime. This includes Discord and JetBrains
+    gnome3.eog
+    pavucontrol
+    #thunderbird
+    #keepassxc
+    #emacs
   ];
 
   environment.variables = {

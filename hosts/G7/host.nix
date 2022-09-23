@@ -39,27 +39,6 @@
   # high-resolution display
   hardware.video.hidpi.enable = lib.mkDefault true;
 
-  environment.variables = {
-    BROWSER = "firefox";
-    TERMINAL = "alacritty";
-  };
-
-  environment.systemPackages = with pkgs; [
-    #brave
-    #discord
-    firefox
-    riced-alacritty
-    gnome3.eog
-    pavucontrol
-    #vlc
-    xdg-utils # Multiple packages depend on xdg-open at runtime. This includes Discord and JetBrains
-    chromium
-    #exodus
-    #rnix-lsp
-    #distrobox
-    #obs-studio
-    ];
-
   networking.firewall.checkReversePath = "loose";
 
   environment.shellAliases = {
