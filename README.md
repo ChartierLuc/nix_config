@@ -8,4 +8,5 @@ Previously Inspired by [gytis-ivaskevicius](https://github.com/gytis-ivaskeviciu
 # Usage
 ```
 nixos-rebuild switch --use-remote-sudo --flake .#G7
+nixos-rebuild switch --use-remote-sudo --flake .#miBook
 ```
