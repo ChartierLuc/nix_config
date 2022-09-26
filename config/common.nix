@@ -8,6 +8,5 @@
       keep-outputs = true
       keep-derivations = true
     '';
-    settigns.trusted-users = [ "root" user]
   };
 }
