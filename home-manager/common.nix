@@ -54,8 +54,8 @@ in
     enable = true;
     iconTheme.package = pkgs.papirus-icon-theme;
     iconTheme.name = "ePapirus";
-    theme.package = pkgs.solarc-gtk-theme;
-    theme.name = "SolArc-Dark";
+    theme.package = pkgs.mojave-gtk-theme;
+    theme.name = "Mojave-dark";
     font.name = "Roboto";
     font.package = pkgs.ibm-plex;
     gtk3.extraConfig = {
@@ -77,6 +77,7 @@ in
     neofetch
     # whiplash-gtk-theme
     solarc-gtk-theme
+    mojave-gtk-theme
     gtk-engine-murrine
     gtk_engines
     vscode

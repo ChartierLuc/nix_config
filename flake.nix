@@ -80,8 +80,8 @@ in {
         ./config/desktop_env/gnome.nix
         ./config/desktop_env/gnome_material_shell.nix
       
-        ## Use Wayland Wayfire
-        #./module/wayfire.nix
+        ## Use Wayland Sway
+        #./config/desktop_env/sway.nix
 
         # Use pipewire
         ./module/audio.nix

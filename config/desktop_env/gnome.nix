@@ -15,6 +15,8 @@
 
    environment.systemPackages = with pkgs; [
     solarc-gtk-theme
+    mojave-gtk-theme
+    gnomeExtensions.emoji-selector
     gtk-engine-murrine
     gtk_engines
   ];
