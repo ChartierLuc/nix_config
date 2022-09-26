@@ -103,6 +103,7 @@
     yubikey-personalization-gui
     virt-manager
     obsidian
+    texlive.combined.scheme-full
   ];
 
   environment.variables = {
