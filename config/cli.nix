@@ -130,5 +130,8 @@
     zip
     vim
     neovim
+    yubikey-agent
+    yubikey-manager
+    yubikey-personalization
   ];
 }

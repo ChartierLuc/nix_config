@@ -97,6 +97,8 @@
     #thunderbird
     #keepassxc
     #emacs
+    yubikey-manager-qt
+    yubikey-personalization-gui
   ];
 
   environment.variables = {

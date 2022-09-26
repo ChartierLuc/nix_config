@@ -55,7 +55,7 @@ in
     iconTheme.package = pkgs.papirus-icon-theme;
     iconTheme.name = "ePapirus";
     theme.package = pkgs.mojave-gtk-theme;
-    theme.name = "Mojave-dark";
+    theme.name = "Mojave-Dark";
     font.name = "Roboto";
     font.package = pkgs.ibm-plex;
     gtk3.extraConfig = {
