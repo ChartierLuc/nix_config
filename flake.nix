@@ -85,6 +85,9 @@ in {
 
         # Use pipewire
         ./module/audio.nix
+
+        # Video Games
+        ./config/vyda.nix
       ];
       specialArgs = { inherit inputs; };
     };
