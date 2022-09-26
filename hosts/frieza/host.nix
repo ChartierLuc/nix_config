@@ -12,7 +12,7 @@
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
   
   # SSD health
-  fileSystems."/".options = [ "noatime" "nodiratime" "discard" ];
+  #fileSystems."/".options = [ "noatime" "nodiratime" "discard" ];
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/1902ffa1-5f25-44e9-945b-1571d9477ebd";
@@ -53,10 +53,10 @@
   hardware.video.hidpi.enable = lib.mkDefault true;
   services.xserver.libinput.enable = true;
 
-  # enable nvidia driver
-  services.xserver.videoDrivers = [ "nvidia" "amdgpu" ];
-  hardware.opengl.enable = true;
-  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
+  # # enable nvidia driver
+  # services.xserver.videoDrivers = [ "nvidia" "amdgpu" ];
+  # hardware.opengl.enable = true;
+  # hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
   
 hardware = {
   enableRedistributableFirmware = true;
