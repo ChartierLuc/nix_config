@@ -59,7 +59,6 @@ in {
         inherit user; # pass user to modules in conf (home.nix or whatever)
         configName = "miBook";
       };
-
       home-manager.users.luc = import ./home-manager/luc.nix;
     }
     # Hardware configuration
@@ -73,10 +72,14 @@ in {
     # Give access to network filestore
     #  ./config/file_access.nix
   
-    # # Use X11 Gnome
-    ./config/xorg.nix
-    ./config/oled_gnome.nix
+    ## Use X11 Gnome
+    #./config/desktop_env/gnome_xorg.nix
+    #./config/desktop_env/oled_gnome.nix
 
+    # Use Wayland Gnome
+    ./config/desktop_env/gnome.nix
+    ./config/desktop_env/gnome_material_shell.nix
+    
     # Use Wayland Wayfire
     #  ./module/wayfire.nix
 
@@ -86,42 +89,42 @@ in {
   specialArgs = { inherit inputs; };
 };
 
-                            G7 = inputs.nixpkgs.lib.nixosSystem { 
-                            system = "x86_64-linux";
-                              modules = [
-                              home-manager.nixosModules.home-manager {
-                                home-manager.useGlobalPkgs = true; # instead of having its own private nixpkgs
-                                home-manager.useUserPackages = true; # install to /etc/profiles instead of ~/.nix-profile
-                                home-manager.extraSpecialArgs = {
-                                  inherit user; # pass user to modules in conf (home.nix or whatever)
-                                  configName = "G7";
-                                };
-                          home-manager.users.luc = import ./home-manager/luc.nix;
-                                }
-                                # Hardware configuration
-                                ./hosts/G7/host.nix
+G7 = inputs.nixpkgs.lib.nixosSystem { 
+system = "x86_64-linux";
+  modules = [
+  home-manager.nixosModules.home-manager {
+    home-manager.useGlobalPkgs = true; # instead of having its own private nixpkgs
+    home-manager.useUserPackages = true; # install to /etc/profiles instead of ~/.nix-profile
+    home-manager.extraSpecialArgs = {
+      inherit user; # pass user to modules in conf (home.nix or whatever)
+      configName = "G7";
+    };
+home-manager.users.luc = import ./home-manager/luc.nix;
+    }
+    # Hardware configuration
+    ./hosts/G7/host.nix
 
-                                # Device is a personal laptop
-                                ./config/base-desktop.nix
-                                ./config/personal.nix
-                                ./config/cli.nix
-                                
-                                # Give access to network filestore
-                                #  ./config/file_access.nix
-                              
-                              # # Use X11 Gnome
-                                ./config/xorg.nix
-                                ./config/oled_gnome.nix
+    # Device is a personal laptop
+    ./config/base-desktop.nix
+    ./config/personal.nix
+    ./config/cli.nix
+    
+    # Give access to network filestore
+    #  ./config/file_access.nix
+  
+  # # Use X11 Gnome
+    ./config/desktop_env/xorg.nix
+    ./config/desktop_env/oled_gnome.nix
 
-                              # Use Wayland Wayfire
-                              #  ./module/wayfire.nix
+  # Use Wayland Wayfire
+  #  ./module/wayfire.nix
 
-                                # Use pipewire
-                                ./module/audio.nix
-                              ];
-                              specialArgs = { inherit inputs; };
-                            };
+    # Use pipewire
+    ./module/audio.nix
+  ];
+  specialArgs = { inherit inputs; };
+};
 
-                          };
-  };
+};
+};
 }

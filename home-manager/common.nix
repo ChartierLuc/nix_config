@@ -6,35 +6,35 @@ let
   browser = [ "firefox.desktop" ];
   #browser = [ "chromium-browser.desktop" ];
   #browser = [ "brave-browser.desktop" ];
-  associations = {
-    "text/html" = browser;
-    "x-scheme-handler/http" = browser;
-    "x-scheme-handler/https" = browser;
-    "x-scheme-handler/ftp" = browser;
-    "x-scheme-handler/chrome" = browser;
-    "x-scheme-handler/about" = browser;
-    "x-scheme-handler/unknown" = browser;
-    "application/x-extension-htm" = browser;
-    "application/x-extension-html" = browser;
-    "application/x-extension-shtml" = browser;
-    "application/xhtml+xml" = browser;
-    "application/x-extension-xhtml" = browser;
-    "application/x-extension-xht" = browser;
+  # associations = {
+  #   "text/html" = browser;
+  #   "x-scheme-handler/http" = browser;
+  #   "x-scheme-handler/https" = browser;
+  #   "x-scheme-handler/ftp" = browser;
+  #   "x-scheme-handler/chrome" = browser;
+  #   "x-scheme-handler/about" = browser;
+  #   "x-scheme-handler/unknown" = browser;
+  #   "application/x-extension-htm" = browser;
+  #   "application/x-extension-html" = browser;
+  #   "application/x-extension-shtml" = browser;
+  #   "application/xhtml+xml" = browser;
+  #   "application/x-extension-xhtml" = browser;
+  #   "application/x-extension-xht" = browser;
 
-    #"text/*" = [ "emacs.desktop" ];
-    "audio/*" = [ "vlc.desktop" ];
-    "video/*" = [ "vlc.dekstop" ];
-    #"image/*" = [ "ahoviewer.desktop" ];
-    #"text/calendar" = [ "thunderbird.desktop" ]; # ".ics"  iCalendar format
-    "application/json" = browser; # ".json"  JSON format
-    "application/pdf" = browser; # ".pdf"  Adobe Portable Document Format (PDF)
-    # "x-scheme-handler/tg" = "userapp-Telegram Desktop-95VAQ1.desktop";
-  };
+  #   #"text/*" = [ "emacs.desktop" ];
+  #   "audio/*" = [ "vlc.desktop" ];
+  #   "video/*" = [ "vlc.dekstop" ];
+  #   #"image/*" = [ "ahoviewer.desktop" ];
+  #   #"text/calendar" = [ "thunderbird.desktop" ]; # ".ics"  iCalendar format
+  #   "application/json" = browser; # ".json"  JSON format
+  #   "application/pdf" = browser; # ".pdf"  Adobe Portable Document Format (PDF)
+  #   # "x-scheme-handler/tg" = "userapp-Telegram Desktop-95VAQ1.desktop";
+  # };
 
 in
 {
   home.stateVersion = "22.05";
-  home.keyboard.options = [ "terminate:ctrl_alt_bksp" "caps:escape" "altwin:swap_alt_win" ];
+  # home.keyboard.options = [ "terminate:ctrl_alt_bksp" "caps:escape" "altwin:swap_alt_win" ];
 
   services.network-manager-applet.enable = true;
 
@@ -44,21 +44,11 @@ in
     NIXPKGS_ALLOW_UNFREE = 1;
   };
 
-  xdg.mimeApps.enable = true;
-  xdg.mimeApps.associations.added = associations;
-  xdg.mimeApps.defaultApplications = associations;
+  # xdg.mimeApps.enable = true;
+  # xdg.mimeApps.associations.added = associations;
+  # xdg.mimeApps.defaultApplications = associations;
 
   fonts.fontconfig.enable = true;
-
-  # vscode
- programs.vscode = {
-  enable = true;
-  extensions = with pkgs.vscode-extensions; [
-    dracula-theme.theme-dracula
-    jnoortheen.nix-ide
-    # bbenoist.Nix
-  ];
-};
 
   gtk = {
     enable = true;
@@ -80,12 +70,12 @@ in
     xdg-utils # Multiple packages depend on xdg-open at runtime. This includes Discord and JetBrains
     gnome3.nautilus
 #    rice-firefox
-    rice-alacritty
+    # rice-alacritty
     gnome3.eog
  #   pavucontrol
     #vlc
     neofetch
-    whiplash-gtk-theme
+    # whiplash-gtk-theme
     solarc-gtk-theme
     gtk-engine-murrine
     gtk_engines
@@ -108,4 +98,19 @@ in
       WantedBy = [ "graphical-session.target" ];
     };
   };
+
+  programs.vscode = {
+    enable = true;
+    package = pkgs.vscode;
+    extensions = with pkgs.vscode-extensions; [
+        dracula-theme.theme-dracula
+        jnoortheen.nix-ide
+        #bbenoist.Nix
+        justusadam.language-haskell
+    ];
+    userSettings = {
+      "window.titleBarStyle"="custom";
+      #"terminal.integrated.fontFamily" = "Hack";
+    };
+};
 }

@@ -3,8 +3,8 @@
 {
   # Make qt apps look like gtk apps
   qt5.enable = true;
-  qt5.platformTheme = "gtk2";
-  qt5.style = "gtk2";
+  qt5.platformTheme = "gnome";
+  qt5.style = "adwaita-dark";
   
    services.xserver = {
     enable = true;
@@ -15,7 +15,6 @@
    };
 
    environment.systemPackages = with pkgs; [
-    solarc-gtk-theme
     gtk-engine-murrine
     gtk_engines
   ];
