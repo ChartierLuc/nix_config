@@ -69,6 +69,8 @@
 
   programs.dconf.enable = true;
 
+  virtualisation.libvirtd.enable = true;
+
 
   fonts = {
     enableDefaultFonts = true;
@@ -99,6 +101,7 @@
     #emacs
     yubikey-manager-qt
     yubikey-personalization-gui
+    virt-manager 
   ];
 
   environment.variables = {

@@ -13,7 +13,7 @@
     shell = pkgs.zsh;
     isNormalUser = true;
     description = "Luc Chartier";
-    extraGroups = [ "audio" "video" "dialout" "adbusers" "wheel" "networkmanager" "docker" "vboxusers" ];
+    extraGroups = [ "audio" "video" "dialout" "adbusers" "wheel" "networkmanager" "docker" "libvirtd" ];
     initialPassword = "toor";
     packages = with pkgs; [
       firefox
