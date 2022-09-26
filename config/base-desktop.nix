@@ -91,17 +91,18 @@
   };
 
   environment.systemPackages = with pkgs; [
-    #firefox
+    firefox
+    thunderbird
     alacritty
     xdg-utils # Multiple packages depend on xdg-open at runtime. This includes Discord and JetBrains
     gnome3.eog
     pavucontrol
-    #thunderbird
-    #keepassxc
-    #emacs
+    keepassxc
+    emacs
     yubikey-manager-qt
     yubikey-personalization-gui
-    virt-manager 
+    virt-manager
+    obsidian
   ];
 
   environment.variables = {
