@@ -1,12 +1,10 @@
 { config, pkgs, lib, ... }:
 {
-  #powerManagement.powertop.enable = true;
-  powerManagement.cpuFreqGovernor = "performance";
   console.keyMap = "us";
   fileSystems."/boot".label = "BOOT";
   i18n.defaultLocale = "en_US.UTF-8";
-  nix.settings.auto-optimise-store = true;
   system.stateVersion = "22.05";
+  nixpkgs.config.allowUnfree = true;
 
   systemd.tmpfiles.rules = [
     "L+ /lib64/ld-linux-x86-64.so.2 - - - - ${pkgs.glibc}/lib64/ld-linux-x86-64.so.2"
@@ -26,8 +24,6 @@
     useDHCP = false;
     networkmanager.enable = true;
   };
-
-  environment.systemPackages = [ pkgs.bluez ];
 
   programs.ssh.startAgent = false;
 
@@ -53,21 +49,13 @@
 
     loader.grub.enable = true;
     loader.grub.version =2;
-    loader.grub.device = "nodev";
+
     loader.grub.efiSupport = true;
     loader.timeout = 2;
     loader.efi.canTouchEfiVariables = true;
     loader.grub.gfxmodeEfi = "1024x768";
     tmpOnTmpfs = true;
   };
-
-   services.xserver = {
-    enable = true;
-    layout = "us";
-    displayManager.gdm.enable = true;
-    displayManager.gdm.wayland = false;
-    desktopManager.gnome.enable = true;
-   };
 
   services = {
     dbus.packages = with pkgs; [ dconf ];
@@ -78,11 +66,10 @@
     printing.enable = true;
     # tlp.enable = true;
   };
-  services.xserver.deviceSection = ''
-    Option "VariableRefresh" "true"
-  '';
 
   programs.dconf.enable = true;
+
+  virtualisation.libvirtd.enable = true;
 
 
   fonts = {
@@ -90,28 +77,38 @@
     fonts = [ pkgs.nerdfonts ];
   };
 
-
-  security.rtkit.enable = true;
-  services.pipewire = {
-    enable = true;
-    alsa.enable = true;
-    alsa.support32Bit = true;
-    pulse.enable = true;
-  };
-
-  hardware = {
-    enableRedistributableFirmware = true;
-    enableAllFirmware = true;
-    opengl = {
-      enable = lib.mkDefault true;
-      driSupport32Bit = config.hardware.opengl.enable;
-      #extraPackages = with pkgs; [
-      #  rocm-opencl-icd
-      #  rocm-opencl-runtime
-      #  amdvlk
-      #];
-      #extraPackages32 = with pkgs; [ driversi686Linux.amdvlk ];
+  nix = {
+    package = pkgs.nixFlakes;
+    extraOptions = ''
+      experimental-features = nix-command flakes
+      keep-outputs = true
+      keep-derivations = true
+    '';
+    settings = {
+      trusted-users = [ "root" "luc" ];
+      auto-optimise-store = true;
     };
-    cpu.intel.updateMicrocode = true;
   };
+
+  environment.systemPackages = with pkgs; [
+    firefox
+    thunderbird
+    alacritty
+    xdg-utils # Multiple packages depend on xdg-open at runtime. This includes Discord and JetBrains
+    gnome3.eog
+    pavucontrol
+    keepassxc
+    emacs
+    yubikey-manager-qt
+    yubikey-personalization-gui
+    virt-manager
+    obsidian
+    texlive.combined.scheme-full
+  ];
+
+  environment.variables = {
+    BROWSER = "firefox";
+    TERMINAL = "alacritty";
+  };
+
 }

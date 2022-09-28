@@ -101,7 +101,6 @@
     exa
     fd
     file
-    fup-repl
     fzf
     gcc
     git
@@ -115,7 +114,6 @@
     man
     nettools
     nix-tree
-    nix2vimDemo
     nixpkgs-fmt
     nushell
     p7zip
@@ -130,5 +128,10 @@
     wget
     which
     zip
+    vim
+    neovim
+    yubikey-agent
+    yubikey-manager
+    yubikey-personalization
   ];
 }

@@ -1,109 +1,133 @@
 {
-  description = "Luc's nix configuration";
+description = "Luc's nix configuration";
 
-  inputs = {
-    nixpkgs.url = github:nixos/nixpkgs/nixos-unstable;
-    unstable.follows = "nixpkgs";
-
-    utils.url = github:gytis-ivaskevicius/flake-utils-plus;
-    devshell.url = github:numtide/devshell;
-    devshell.inputs.nixpkgs.follows = "nixpkgs";
-    devshell.inputs.flake-utils.follows = "utils";
-
-    # nix2vim is a neovim lua configuration parser.
-    nix2vim.url = github:gytis-ivaskevicius/nix2vim;
-    nix2vim.inputs.nixpkgs.follows = "nixpkgs";
-    nix2vim.inputs.flake-utils.follows = "utils";
-
-    # home-majnager pins nixpkgs to a specific version in its flake.
-    # we want to make sure everything pins to the same version of nixpkgs to be more efficient
-    home-manager = {
-      url = github:nix-community/home-manager;
-      inputs.nixpkgs.follows = "nixpkgs";
+inputs = {
+  nixpkgs.url = github:nixos/nixpkgs/nixos-unstable;
+  unstable.follows = "nixpkgs";
+  
+  nixpkgs-wayland  = {
+    url = "github:nix-community/nixpkgs-wayland"; 
     };
 
-    # agenix allows me to store encrypted secrets in the repo just like git-crypt, except
-    # it integrates with nix so I don't need to have world-readable secrets in the nix store.
-    agenix = {
-      url = "github:ryantm/agenix";
-      inputs.nixpkgs.follows = "nixpkgs";
+  # # home-manager pins nixpkgs to a specific version in its flake.
+  # # we want to make sure everything pins to the same version of nixpkgs to be more efficient
+  home-manager = {
+    url = github:nix-community/home-manager;
+    inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # TODO: separate each config into its own flake to avoid pulling unnecessary deps? or is nix smart enough
-    nixos-wsl = {
-      url = "github:nix-community/NixOS-WSL";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+  # # agenix allows me to store encrypted secrets in the repo just like git-crypt, except
+  # # it integrates with nix so I don't need to have world-readable secrets in the nix store.
+  # agenix = {
+  #             url = "github:ryantm/agenix";
+  #             inputs.nixpkgs.follows = "nixpkgs";
+  #           };
 
-    forgit-git = {
-      url = github:wfxr/forgit;
-      flake = false;
+  #TODO: separate each config into its own flake to avoid pulling unnecessary deps? or is nix smart enough
+  nixos-wsl = {
+    url = "github:nix-community/NixOS-WSL";
+    inputs.nixpkgs.follows = "nixpkgs";
     };
-
   };
 
-  outputs = { self, nixos-wsl, nix2vim, agenix, utils, home-manager, ... }@inputs: {
-    let
-      pkgs = self.pkgs.x86_64-linux.nixpkgs;
-      mkApp = utils.lib.mkApp;
-      suites = import ./suites.nix { inherit utils; };
-    in
-    with suites.nixosModules;
-    utils.lib.mkFlake {
-      inherit self inputs;
-      inherit (suites) nixosModules;
+outputs = inputs@{self, nixpkgs, home-manager,  ...}:
 
-      supportedSystems = [ "aarch64-linux" "x86_64-linux" ];
-      channelsConfig.allowUnfree = true;
+let
+  user = "luc";
+  system = "x86_64-linux";
+  
+  pkgs = import nixpkgs {
+    config.allowUnfree = true;
+    # # TODO: Look at overlays
+    # overlays = [
+    #             ];
+  };
 
-      channels.nixpkgs.overlaysBuilder = channels: [
-        (final: prev: {
-          #inherit (channels.unstable) pure-prompt neovim-unwrapped linuxPackages_latest gcc11Stdenv layan-gtk-theme;
-        })
-      ];
-
-      hosts.G7.modules = suites.desktopModules ++ [
-        {
-          security.apparmor.enable = true;
+in {
+  # TODO: Look at overlays
+  inputs.nixpkgs.overlays = [
+    #import ./overlays/default.nix
+  ]; 
+  nixosConfigurations = { 
+    miBook = inputs.nixpkgs.lib.nixosSystem { 
+      system = "x86_64-linux";
+      modules = [
+        home-manager.nixosModules.home-manager {
+          home-manager.useGlobalPkgs = true; # instead of having its own private nixpkgs
+          home-manager.useUserPackages = true; # install to /etc/profiles instead of ~/.nix-profile
+          home-manager.extraSpecialArgs = {
+            inherit user; # pass user to modules in conf (home.nix or whatever)
+            configName = "miBook";
+          };
+          home-manager.users.luc = import ./home-manager/luc.nix;
         }
+        # Hardware configuration
+        ./hosts/miBook/host.nix
 
-        ./hosts/G7.host.nix
+        # Device is a personal laptop
+        ./config/base-desktop.nix
+        ./config/personal.nix
+        ./config/cli.nix
+      
+        ## Give access to network filestore
+        #./config/file_access.nix
+    
+        ## Use X11 Gnome
+        #./config/desktop_env/gnome_xorg.nix
+        #./config/desktop_env/oled_gnome.nix
+
+        # Use Wayland Gnome
+        ./config/desktop_env/gnome.nix
+        ./config/desktop_env/gnome_material_shell.nix
+      
+        ## Use Wayland Sway
+        #./config/desktop_env/sway.nix
+
+        # Use pipewire
+        ./module/audio.nix
+
+        # Video Games
+        ./config/vyda.nix
       ];
-
-      # hosts.Flyover.modules = suites.wsl ++
-      # [
-      #   ./hosts/Flyover.host.nix
-      # ];
-
-      sharedOverlays = [
-        self.overlay
-        (final: prev: {
-          firefox = prev.riced-firefox;
-        })
-      ];
-
-      hostDefaults.modules = [
-        home-manager.nixosModules.home-manager
-      ] ++ suites.sharedModules;
-
-      outputsBuilder = channels: with channels.nixpkgs;{
-        defaultPackage = riced-neovim;
-
-        packages = {
-          inherit
-            riced-alacritty
-            riced-firefox
-            riced-neovim
-            whiplash-gtk-theme
-            ;
-        };
-
-        devShell = mkShell {
-          buildInputs = [ git ];
-        };
-      };
-
-      overlay = import ./overlays;
-
+      specialArgs = { inherit inputs; };
     };
+
+    G7 = inputs.nixpkgs.lib.nixosSystem { 
+      system = "x86_64-linux";
+      modules = [
+        home-manager.nixosModules.home-manager {
+          home-manager.useGlobalPkgs = true; # instead of having its own private nixpkgs
+          home-manager.useUserPackages = true; # install to /etc/profiles instead of ~/.nix-profile
+          home-manager.extraSpecialArgs = {
+            inherit user; # pass user to modules in conf (home.nix or whatever)
+            configName = "G7";
+          };
+          home-manager.users.luc = import ./home-manager/luc.nix;
+        }
+        # Hardware configuration
+        ./hosts/G7/host.nix
+        ./config/common.nix
+
+        # Device is a personal laptop
+        ./config/base-desktop.nix
+        ./config/personal.nix
+        ./config/cli.nix
+    
+        ## Give access to network filestore
+        #./config/file_access.nix
+  
+        # Use X11 Gnome
+        ./config/desktop_env/xorg.nix
+        ./config/desktop_env/oled_gnome.nix
+
+        ## Use Wayland Wayfire
+        #./module/wayfire.nix
+
+        # Use pipewire
+        ./module/audio.nix
+      ];
+      specialArgs = { inherit inputs; };
+    };
+  };
+};
 }

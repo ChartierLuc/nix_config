@@ -6,8 +6,6 @@
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
 
-  time.timeZone = "NewYork/America";
-
   # SSD health
   fileSystems."/".options = [ "noatime" "nodiratime" "discard" ];
 
@@ -31,43 +29,15 @@
       allowDiscards = true;
   };
 
-  programs.ssh.startAgent = false;
-  # programs.dconf.enable = true;
-
   hardware.bluetooth.enable = true;
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
-  hardware.pulseaudio.enable = false;
 
   services.xserver = {
     videoDrivers = [ "modesetting" ];
-    useGlamor = true;
   };
 
   # high-resolution display
   hardware.video.hidpi.enable = lib.mkDefault true;
-
-  environment.variables = {
-    BROWSER = "firefox";
-    TERMINAL = "alacritty";
-  };
-
-  environment.systemPackages = with pkgs; [
-    #brave
-    #discord
-    firefox
-    riced-alacritty
-    gnome3.eog
-    pavucontrol
-    vlc
-    xdg-utils # Multiple packages depend on xdg-open at runtime. This includes Discord and JetBrains
-    chromium
-    #exodus
-    #rnix-lsp
-    #distrobox
-    #obs-studio
-    gnomeExtensions.hide-top-bar
-    gnomeExtensions.burn-my-windows  
-    ];
 
   networking.firewall.checkReversePath = "loose";
 
