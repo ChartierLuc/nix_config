@@ -85,7 +85,7 @@ in {
 
         # Use pipewire
         ./module/audio.nix
-        ./module/audio_bt.nix
+        # ./module/audio_bt.nix
       ];
       specialArgs = { inherit inputs; };
     };
