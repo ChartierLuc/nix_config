@@ -85,9 +85,47 @@ in {
 
         # Use pipewire
         ./module/audio.nix
+        ./module/audio_bt.nix
+      ];
+      specialArgs = { inherit inputs; };
+    };
 
-        # Video Games
-        ./config/vyda.nix
+    frieza = inputs.nixpkgs.lib.nixosSystem { 
+      system = "x86_64-linux";
+      modules = [
+        home-manager.nixosModules.home-manager {
+          home-manager.useGlobalPkgs = true; # instead of having its own private nixpkgs
+          home-manager.useUserPackages = true; # install to /etc/profiles instead of ~/.nix-profile
+          home-manager.extraSpecialArgs = {
+            inherit user; # pass user to modules in conf (home.nix or whatever)
+            configName = "frieza";
+          };
+          home-manager.users.luc = import ./home-manager/luc.nix;
+        }
+        # Hardware configuration
+        ./hosts/frieza/host.nix
+
+        # Device is a personal laptop
+        ./config/base-desktop.nix
+        ./config/personal.nix
+        ./config/cli.nix
+      
+        ## Give access to network filestore
+        #./config/file_access.nix
+    
+        ## Use X11 Gnome
+        #./config/desktop_env/gnome_xorg.nix
+        #./config/desktop_env/oled_gnome.nix
+
+        # Use Wayland Gnome
+        ./config/desktop_env/gnome.nix
+        ./config/desktop_env/gnome_material_shell.nix
+      
+        ## Use Wayland Sway
+        #./config/desktop_env/sway.nix
+
+        # Use pipewire
+        ./module/audio.nix
       ];
       specialArgs = { inherit inputs; };
     };
