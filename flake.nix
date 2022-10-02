@@ -28,9 +28,14 @@ inputs = {
     url = "github:nix-community/NixOS-WSL";
     inputs.nixpkgs.follows = "nixpkgs";
     };
+
+  nixos-generators = {
+    url = "github:nix-community/nixos-generators";
+    inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-outputs = inputs@{self, nixpkgs, home-manager,  ...}:
+outputs = inputs@{self, nixpkgs, home-manager,  generators, ...}:
 
 let
   user = "luc";
@@ -47,7 +52,90 @@ in {
   # TODO: Look at overlays
   inputs.nixpkgs.overlays = [
     #import ./overlays/default.nix
-  ]; 
+  ];
+  packages.x86_64-linux = {
+    vmware = nixos-generators.nixosGenerate {
+      system = "x86_64-linux";
+        modules = [
+          home-manager.nixosModules.home-manager {
+            home-manager.useGlobalPkgs = true; # instead of having its own private nixpkgs
+            home-manager.useUserPackages = true; # install to /etc/profiles instead of ~/.nix-profile
+            home-manager.extraSpecialArgs = {
+              inherit user; # pass user to modules in conf (home.nix or whatever)
+              configName = "miBook";
+            };
+            home-manager.users.luc = import ./home-manager/luc.nix;
+          }
+          # Hardware configuration
+          ./hosts/vm/host.nix
+
+          # Device is a personal laptop
+          ./config/base-desktop.nix
+          ./config/personal.nix
+          ./config/cli.nix
+        
+          ## Give access to network filestore
+          #./config/file_access.nix
+      
+          ## Use X11 Gnome
+          #./config/desktop_env/gnome_xorg.nix
+          #./config/desktop_env/oled_gnome.nix
+
+          # Use Wayland Gnome
+          ./config/desktop_env/gnome.nix
+          # ./config/desktop_env/gnome_material_shell.nix
+        
+          ## Use Wayland Sway
+          #./config/desktop_env/sway.nix
+
+          # Use pipewire
+          ./module/audio.nix
+          # ./module/audio_bt.nix
+        ];
+        format = "vmware";
+    };
+    vbox = nixos-generators.nixosGenerate {
+      system = "x86_64-linux";
+      modules = [
+          home-manager.nixosModules.home-manager {
+            home-manager.useGlobalPkgs = true; # instead of having its own private nixpkgs
+            home-manager.useUserPackages = true; # install to /etc/profiles instead of ~/.nix-profile
+            home-manager.extraSpecialArgs = {
+              inherit user; # pass user to modules in conf (home.nix or whatever)
+              configName = "miBook";
+            };
+            home-manager.users.luc = import ./home-manager/luc.nix;
+          }
+          # Hardware configuration
+          ./hosts/vm/host.nix
+
+          # Device is a personal laptop
+          ./config/base-desktop.nix
+          ./config/personal.nix
+          ./config/cli.nix
+        
+          ## Give access to network filestore
+          #./config/file_access.nix
+      
+          ## Use X11 Gnome
+          #./config/desktop_env/gnome_xorg.nix
+          #./config/desktop_env/oled_gnome.nix
+
+          # Use Wayland Gnome
+          ./config/desktop_env/gnome.nix
+          # ./config/desktop_env/gnome_material_shell.nix
+        
+          ## Use Wayland Sway
+          #./config/desktop_env/sway.nix
+
+          # Use pipewire
+          ./module/audio.nix
+          # ./module/audio_bt.nix
+        ];
+      format = "virtualbox";
+    };
+  };
+
   nixosConfigurations = { 
     miBook = inputs.nixpkgs.lib.nixosSystem { 
       system = "x86_64-linux";
