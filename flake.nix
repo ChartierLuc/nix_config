@@ -54,7 +54,7 @@ in {
     #import ./overlays/default.nix
   ];
   packages.x86_64-linux = {
-    vmware = nixos-generators.nixosGenerate {
+    vm = nixos-generators.nixosGenerate {
       system = "x86_64-linux";
         modules = [
           home-manager.nixosModules.home-manager {
@@ -92,7 +92,7 @@ in {
           ./module/audio.nix
           # ./module/audio_bt.nix
         ];
-        format = "vmware";
+        format = "vm";
     };
     vbox = nixos-generators.nixosGenerate {
       system = "x86_64-linux";
@@ -136,7 +136,55 @@ in {
     };
   };
 
-  nixosConfigurations = { 
+  nixosConfigurations = {
+    linux-vm = inputs.nixpkgs.lib.nixosSystem { 
+      system = "x86_64-linux";
+      modules = [
+        home-manager.nixosModules.home-manager {
+          home-manager.useGlobalPkgs = true; # instead of having its own private nixpkgs
+          home-manager.useUserPackages = true; # install to /etc/profiles instead of ~/.nix-profile
+          home-manager.extraSpecialArgs = {
+            inherit user; # pass user to modules in conf (home.nix or whatever)
+            configName = "miBook";
+          };
+          home-manager.users.luc = import ./home-manager/luc.nix;
+        }
+          {
+            imports = [ <nixpkgs/nixos/modules/virtualisation/qemu-vm.nix> ];
+            virtualisation = {
+            memorySize = 2048; # Use 2048MiB memory.
+            cores = 4;         # Simulate 4 cores.
+          };
+        }
+          # Hardware configuration
+          ./hosts/vm/host.nix
+
+          # Device is a personal laptop
+          ./config/vm.nix
+          ./config/personal.nix
+          ./config/cli.nix
+        
+          ## Give access to network filestore
+          #./config/file_access.nix
+      
+          ## Use X11 Gnome
+          #./config/desktop_env/gnome_xorg.nix
+          #./config/desktop_env/oled_gnome.nix
+
+          # Use Wayland Gnome
+          ./config/desktop_env/gnome.nix
+          # ./config/desktop_env/gnome_material_shell.nix
+        
+          ## Use Wayland Sway
+          #./config/desktop_env/sway.nix
+
+          # Use pipewire
+          ./module/audio.nix
+          # ./module/audio_bt.nix
+      ];
+      specialArgs = { inherit inputs; };
+    };
+
     miBook = inputs.nixpkgs.lib.nixosSystem { 
       system = "x86_64-linux";
       modules = [
