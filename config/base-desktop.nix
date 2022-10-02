@@ -69,6 +69,8 @@
 
   programs.dconf.enable = true;
 
+  virtualisation.libvirtd.enable = true;
+
 
   fonts = {
     enableDefaultFonts = true;
@@ -89,16 +91,19 @@
   };
 
   environment.systemPackages = with pkgs; [
-    #firefox
+    firefox
+    thunderbird
     alacritty
     xdg-utils # Multiple packages depend on xdg-open at runtime. This includes Discord and JetBrains
     gnome3.eog
     pavucontrol
-    #thunderbird
-    #keepassxc
-    #emacs
+    keepassxc
+    emacs
     yubikey-manager-qt
     yubikey-personalization-gui
+    virt-manager
+    obsidian
+    texlive.combined.scheme-full
   ];
 
   environment.variables = {
