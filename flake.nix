@@ -35,7 +35,7 @@ inputs = {
     };
   };
 
-outputs = inputs@{self, nixpkgs, home-manager,  generators, ...}:
+outputs = inputs@{self, nixpkgs, home-manager,  nixos-generators, ...}:
 
 let
   user = "luc";
@@ -70,7 +70,7 @@ in {
           ./hosts/vm/host.nix
 
           # Device is a personal laptop
-          ./config/base-desktop.nix
+          ./config/vm.nix
           ./config/personal.nix
           ./config/cli.nix
         
@@ -110,7 +110,7 @@ in {
           ./hosts/vm/host.nix
 
           # Device is a personal laptop
-          ./config/base-desktop.nix
+          ./config/vm.nix
           ./config/personal.nix
           ./config/cli.nix
         
