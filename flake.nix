@@ -149,13 +149,7 @@ in {
           };
           home-manager.users.luc = import ./home-manager/luc.nix;
         }
-          {
-            imports = [ <nixpkgs/nixos/modules/virtualisation/qemu-vm.nix> ];
-            virtualisation = {
-            memorySize = 2048; # Use 2048MiB memory.
-            cores = 4;         # Simulate 4 cores.
-          };
-        }
+          <nixpkgs/nixos/modules/virtualisation/qemu-vm.nix> 
           # Hardware configuration
           ./hosts/vm/host.nix
 
@@ -245,6 +239,7 @@ in {
         ./config/base-desktop.nix
         ./config/personal.nix
         ./config/cli.nix
+        ./config/dev.nix 
       
         ## Give access to network filestore
         #./config/file_access.nix
