@@ -104,6 +104,7 @@
     virt-manager
     obsidian
     texlive.combined.scheme-full
+    conda
   ];
 
   environment.variables = {
