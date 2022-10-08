@@ -8,8 +8,8 @@
   boot.loader.grub.device = "nodev";
   
   ## Bootloader.
-  #boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
+  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.efi.efiSysMountPoint = "/boot";
   
   # SSD health
   fileSystems."/".options = [ "noatime" "nodiratime" "discard" ];
