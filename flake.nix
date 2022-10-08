@@ -9,15 +9,15 @@ inputs = {
     url = "github:nix-community/nixpkgs-wayland"; 
     };
 
-  # # home-manager pins nixpkgs to a specific version in its flake.
-  # # we want to make sure everything pins to the same version of nixpkgs to be more efficient
+  ## home-manager pins nixpkgs to a specific version in its flake.
+  ## we want to make sure everything pins to the same version of nixpkgs to be more efficient
   home-manager = {
     url = github:nix-community/home-manager;
     inputs.nixpkgs.follows = "nixpkgs";
     };
 
-  # # agenix allows me to store encrypted secrets in the repo just like git-crypt, except
-  # # it integrates with nix so I don't need to have world-readable secrets in the nix store.
+  ## agenix allows me to store encrypted secrets in the repo just like git-crypt, except
+  ## it integrates with nix so I don't need to have world-readable secrets in the nix store.
   # agenix = {
   #             url = "github:ryantm/agenix";
   #             inputs.nixpkgs.follows = "nixpkgs";
@@ -39,8 +39,7 @@ let
   pkgs = import nixpkgs {
     config.allowUnfree = true;
     # # TODO: Look at overlays
-    # overlays = [
-    #             ];
+    # overlays = [ ];
   };
 
 in {
@@ -78,7 +77,6 @@ in {
 
         # Use Wayland Gnome
         ./config/desktop_env/gnome.nix
-        ./config/desktop_env/gnome_material_shell.nix
       
         ## Use Wayland Sway
         #./config/desktop_env/sway.nix
@@ -119,7 +117,6 @@ in {
 
         # Use Wayland Gnome
         ./config/desktop_env/gnome.nix
-        ./config/desktop_env/gnome_material_shell.nix
       
         ## Use Wayland Sway
         #./config/desktop_env/sway.nix
