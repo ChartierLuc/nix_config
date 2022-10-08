@@ -9,7 +9,10 @@
   
   ## Bootloader.
   #boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
+  #boot.loader.efi.efiSysMountPoint = "/boot/efi";
+  # enable the nvidia driver
+  services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
   
   # SSD health
   #fileSystems."/".options = [ "noatime" "nodiratime" "discard" ];

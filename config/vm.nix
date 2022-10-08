@@ -1,5 +1,9 @@
 { config, pkgs, lib, ... }:
 {
+  virtualisation = {
+    memorySize = 16384; # Use 2048MiB memory.
+    cores = 8;         # Simulate 4 cores.
+  };
   console.keyMap = "us";
   fileSystems."/boot".label = "BOOT";
   i18n.defaultLocale = "en_US.UTF-8";

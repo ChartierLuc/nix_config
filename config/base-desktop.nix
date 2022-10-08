@@ -104,6 +104,8 @@
     virt-manager
     obsidian
     texlive.combined.scheme-full
+    gimp
+    imagemagick
   ];
 
   environment.variables = {
