@@ -106,6 +106,7 @@
     gimp
     imagemagick
     conda
+    nvtop
   ];
 
   environment.variables = {
