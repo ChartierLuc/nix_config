@@ -78,7 +78,6 @@
   };
 
   nix = {
-    package = pkgs.nixFlakes;
     extraOptions = ''
       experimental-features = nix-command flakes
       keep-outputs = true
@@ -95,7 +94,7 @@
     thunderbird
     alacritty
     xdg-utils # Multiple packages depend on xdg-open at runtime. This includes Discord and JetBrains
-    gnome3.eog
+    gnome.eog
     pavucontrol
     keepassxc
     emacs
@@ -106,6 +105,7 @@
     texlive.combined.scheme-full
     gimp
     imagemagick
+    conda
   ];
 
   environment.variables = {

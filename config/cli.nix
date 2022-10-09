@@ -133,5 +133,6 @@
     yubikey-agent
     yubikey-manager
     yubikey-personalization
+    efibootmgr
   ];
 }
