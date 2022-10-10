@@ -50,6 +50,7 @@
   # networking.interfaces.wlp1s0.useDHCP = lib.mkDefault true;
 
   networking.useDHCP = lib.mkDefault true;
+  networking.hostName = "frieza";
 
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   # high-resolution display

@@ -29,6 +29,8 @@
       allowDiscards = true;
   };
 
+  networking.hostName = "G7";
+
   hardware.bluetooth.enable = true;
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
 
