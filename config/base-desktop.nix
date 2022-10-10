@@ -61,8 +61,6 @@
     dbus.packages = with pkgs; [ dconf ];
     zfs.autoSnapshot.enable = true;
     zfs.autoScrub.enable = true;
-    openssh.enable = false;
-    openssh.passwordAuthentication = false;
     printing.enable = true;
     # tlp.enable = true;
   };

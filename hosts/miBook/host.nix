@@ -34,6 +34,7 @@
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   #networking.useDHCP = lib.mkDefault true;
   # networking.interfaces.wlp1s0.useDHCP = lib.mkDefault true;
+  networking.hostName = "miBook";
 
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
   # high-resolution display
