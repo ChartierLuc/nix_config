@@ -238,6 +238,9 @@ in {
         ./config/personal.nix
         ./config/cli.nix
         ./config/dev.nix 
+
+        # Device is ssh server
+        ./config/ssh-server.nix
       
         ## Give access to network filestore
         #./config/file_access.nix
