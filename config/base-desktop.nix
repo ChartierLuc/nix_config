@@ -105,6 +105,7 @@
     imagemagick
     conda
     nvtop
+    xpad
   ];
 
   environment.variables = {
