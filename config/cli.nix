@@ -135,5 +135,6 @@
     yubikey-manager
     yubikey-personalization
     efibootmgr
+    nix-index
   ];
 }
