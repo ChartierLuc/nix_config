@@ -232,6 +232,7 @@ in {
         }
         # Hardware configuration
         ./hosts/frieza/host.nix
+        ./config/weylus.nix
 
         # Device is a personal laptop
         ./config/base-desktop.nix
