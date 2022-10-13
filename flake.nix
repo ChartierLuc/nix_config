@@ -239,6 +239,7 @@ in {
         ./config/personal.nix
         ./config/cli.nix
         ./config/dev.nix 
+        ./config/sd.nix
 
         # Device is ssh server
         ./config/ssh-server.nix
