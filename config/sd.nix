@@ -13,25 +13,25 @@
 
   services.nginx.enable = true;
   services.nginx.virtualHosts = 
-#    let
-#    SSL = {
-#      enableACME = true;
-#      forceSSL = true;
-#    }; in {
-#      "frieza.bee.hive" = (SSL // {
-#        locations."/".proxyPass = "http://127.0.0.1:7862/";
-#
-#        serverAliases = [
-#          "frieza.bee.hive"
-#        ];
-#      });
-#    };
-  {
-    "frieza.bee.hive" = ({
-      locations."/".proxyPass = "http://127.0.0.1:7862/";
-      serverAliases = [
-        "frieza.bee.hive"
-      ];
-    });
-  };
+    let
+    SSL = {
+      enableACME = true;
+      forceSSL = true;
+    }; in {
+      "frieza.bee.hive" = (SSL // {
+        locations."/".proxyPass = "http://127.0.0.1:7862/";
+
+        serverAliases = [
+          "frieza.bee.hive"
+        ];
+      });
+    };
+#  {
+#    "frieza.bee.hive" = ({
+#      locations."/".proxyPass = "http://127.0.0.1:7862/";
+#      serverAliases = [
+#        "frieza.bee.hive"
+#      ];
+#    });
+#  };
 }
