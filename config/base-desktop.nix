@@ -17,7 +17,6 @@
 
   networking = {
     firewall.enable = true;
-    #firewall.allowedTCPPorts = [ 8080 9090 ];
     firewall.allowPing = false;
     hostId = builtins.substring 0 8 (builtins.hashString "md5" config.networking.hostName);
     nameservers = [ "1.1.1.1" ];
