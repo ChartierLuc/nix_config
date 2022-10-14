@@ -66,6 +66,17 @@ in
     };
   };
 
+  programs.vim = {
+    enable = true;
+    plugins = with pkgs.vimPlugins; [
+      vim-airline
+      vim-nix
+    ];
+   extraConfig = ''
+     set mouse=a
+   '';
+  };
+
   home.packages = with pkgs; [
     xdg-utils # Multiple packages depend on xdg-open at runtime. This includes Discord and JetBrains
     gnome.nautilus
