@@ -69,7 +69,7 @@ in {
           ./hosts/vm/host.nix
 
           # Device is a personal laptop
-          ./config/vm.nix
+          #./config/vm.nix
           ./config/personal.nix
           ./config/cli.nix
         
@@ -109,7 +109,7 @@ in {
           ./hosts/vm/host.nix
 
           # Device is a personal laptop
-          ./config/vm.nix
+          #./config/vm.nix
           ./config/personal.nix
           ./config/cli.nix
         
