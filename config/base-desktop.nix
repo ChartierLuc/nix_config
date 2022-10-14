@@ -105,6 +105,7 @@
     conda
     nvtop
     xpad
+    nixos-shell
   ];
 
   environment.variables = {
