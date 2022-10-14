@@ -1,6 +1,13 @@
 { config, pkgs, lib, ... }:
 
 {
+  users.users.ai = {
+    isNormalUser = true;
+    home = "/home/ai";
+    description = "AI User";
+    extraGroups = [];
+  };
+
   networking.firewall = {
     enable = true;
     allowedTCPPorts = [ 80 443 ];
@@ -19,7 +26,7 @@
       forceSSL = true;
     }; in {
       "frieza.bee.hive" = (SSL // {
-        locations."/".proxyPass = "http://127.0.0.1:7862/";
+        locations."/".proxyPass = "http://127.0.0.1:7860/";
 
         serverAliases = [
           "frieza.bee.hive"
