@@ -1,43 +1,43 @@
 {
-description = "Luc's nix configuration";
+  description = "Luc's nix configuration";
 
-inputs = {
-  nixpkgs.url = github:nixos/nixpkgs/nixos-unstable;
-  unstable.follows = "nixpkgs";
+  inputs = {
+    nixpkgs.url = github:nixos/nixpkgs/nixos-unstable;
+    unstable.follows = "nixpkgs";
   
-  nixpkgs-wayland  = {
-    url = "github:nix-community/nixpkgs-wayland"; 
+    nixpkgs-wayland  = {
+      url = "github:nix-community/nixpkgs-wayland"; 
     };
 
-  ## home-manager pins nixpkgs to a specific version in its flake.
-  ## we want to make sure everything pins to the same version of nixpkgs to be more efficient
-  home-manager = {
-    url = github:nix-community/home-manager;
-    inputs.nixpkgs.follows = "nixpkgs";
+    ## home-manager pins nixpkgs to a specific version in its flake.
+    ## we want to make sure everything pins to the same version of nixpkgs to be more efficient
+    home-manager = {
+      url = github:nix-community/home-manager;
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
-  ## agenix allows me to store encrypted secrets in the repo just like git-crypt, except
-  ## it integrates with nix so I don't need to have world-readable secrets in the nix store.
-  # agenix = {
-  #             url = "github:ryantm/agenix";
-  #             inputs.nixpkgs.follows = "nixpkgs";
-  #           };
-
-  #TODO: separate each config into its own flake to avoid pulling unnecessary deps? or is nix smart enough
-  nixos-wsl = {
-    url = "github:nix-community/NixOS-WSL";
-    inputs.nixpkgs.follows = "nixpkgs";
+    ## agenix allows me to store encrypted secrets in the repo just like git-crypt, except
+    ## it integrates with nix so I don't need to have world-readable secrets in the nix store.
+    agenix = {
+      url = "github:ryantm/agenix";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
-  nixos-generators = {
-    url = "github:nix-community/nixos-generators";
-    inputs.nixpkgs.follows = "nixpkgs";
+    #TODO: separate each config into its own flake to avoid pulling unnecessary deps? or is nix smart enough
+    nixos-wsl = {
+      url = "github:nix-community/NixOS-WSL";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nixos-generators = {
+      url = "github:nix-community/nixos-generators";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-outputs = inputs@{self, nixpkgs, home-manager,  nixos-generators, ...}:
+  outputs = inputs@{self, nixpkgs, home-manager,  nixos-generators, ...}:
 
-let
+  let
   user = "luc";
   system = "x86_64-linux";
   
