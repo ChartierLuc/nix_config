@@ -106,6 +106,8 @@
     nvtop
     xpad
     nixos-shell
+    darktable
+    signal
   ];
 
   environment.variables = {
