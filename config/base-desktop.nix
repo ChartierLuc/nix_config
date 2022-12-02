@@ -107,7 +107,8 @@
     xpad
     nixos-shell
     darktable
-    signal
+    signal-desktop
+    discord
   ];
 
   environment.variables = {
