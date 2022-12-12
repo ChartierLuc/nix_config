@@ -108,6 +108,7 @@
     nixos-shell
     darktable
     signal-desktop
+    waynergy
     discord
   ];
 

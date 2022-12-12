@@ -49,6 +49,13 @@
   # hardware.opengl.enable = true;
   # hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
   
+environment.shellAliases = {
+  deffyodds = "cd /home/luc/Documents/git_repos/ai/deffy-odds";
+  nixconfig = "cd /home/luc/Documents/nix_config";
+
+  rebuild = "nixos-rebuild switch --use-remote-sudo --flake /home/luc/Documents/nix_config#frieza";
+};
+
 hardware = {
   enableRedistributableFirmware = true;
   enableAllFirmware = true;
