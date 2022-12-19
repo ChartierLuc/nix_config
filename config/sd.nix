@@ -10,8 +10,12 @@
 
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 80 443 ];
+    allowedTCPPorts = [ 80 443 7860 6007];
   };
+
+  networking.extraHosts = ''
+    10.0.0.64 beehive
+  '';
 
   security.acme = {
     acceptTerms = true;

@@ -3,40 +3,27 @@
   nixpkgs.config.allowUnfree = true;
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usb_storage" "sd_mod" "amdgpu" "usbhid" ];  
   boot.initrd.kernelModules = [ "dm-snapshot" "amdgpu" ];
-  boot.kernelModules = [ "kvm-amd" ];
-  boot.extraModulePackages = [ ];
+  boot.kernelModules = [  "nvidia" "kvm-amd" ];
   boot.loader.grub.device = "nodev";
   
   ## Bootloader.
-  #boot.loader.efi.canTouchEfiVariables = true;
-  #boot.loader.efi.efiSysMountPoint = "/boot/efi";
+  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.efi.efiSysMountPoint = "/boot";
   # enable the nvidia driver
-  services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.videoDrivers = [ "nvidia" "amdgpu" ];
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
   
   # SSD health
   #fileSystems."/".options = [ "noatime" "nodiratime" "discard" ];
 
+  boot.extraModulePackages = [ pkgs.linuxPackages.nvidia_x11 ];
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/1902ffa1-5f25-44e9-945b-1571d9477ebd";
-      fsType = "btrfs";
-      options = [ "subvol=root" ];
-    };
-
-  fileSystems."/home" =
-    { device = "/dev/disk/by-uuid/1902ffa1-5f25-44e9-945b-1571d9477ebd";
-      fsType = "btrfs";
-      options = [ "subvol=home" ];
-    };
-
-  fileSystems."/nix" =
-    { device = "/dev/disk/by-uuid/1902ffa1-5f25-44e9-945b-1571d9477ebd";
-      fsType = "btrfs";
-      options = [ "subvol=nix" ];
+    { device = "/dev/disk/by-uuid/e190b08d-cac6-44ee-9372-a0f8c4b163a8";
+      fsType = "ext4";
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/B42A-DFCE";
+    { device = "/dev/disk/by-uuid/32EE-136B";
       fsType = "vfat";
     };
 
@@ -62,6 +49,13 @@
   # hardware.opengl.enable = true;
   # hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
   
+environment.shellAliases = {
+  deffyodds = "cd /home/luc/Documents/git_repos/ai/deffy-odds";
+  nixconfig = "cd /home/luc/Documents/nix_config";
+
+  rebuild = "nixos-rebuild switch --use-remote-sudo --flake /home/luc/Documents/nix_config#frieza";
+};
+
 hardware = {
   enableRedistributableFirmware = true;
   enableAllFirmware = true;

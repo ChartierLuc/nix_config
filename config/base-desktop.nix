@@ -17,7 +17,7 @@
 
   networking = {
     firewall.enable = true;
-    firewall.allowPing = false;
+    firewall.allowPing = true;
     hostId = builtins.substring 0 8 (builtins.hashString "md5" config.networking.hostName);
     nameservers = [ "1.1.1.1" ];
     useDHCP = false;
@@ -106,6 +106,11 @@
     nvtop
     xpad
     nixos-shell
+    darktable
+    signal-desktop
+    waynergy
+    discord
+    linuxPackages.nvidia_x11
   ];
 
   environment.variables = {
