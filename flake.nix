@@ -33,9 +33,14 @@
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-  };
 
-  outputs = inputs@{self, nixpkgs, home-manager,  nixos-generators, ...}:
+  darwin = {
+    url = "github:lnl7/nix-darwin/master";
+    inputs.nixpkgs.follows = "nixpkgs";
+  };
+};
+
+outputs = inputs@{self, nixpkgs, home-manager,  nixos-generators, darwin, ...}:
 
   let
   user = "luc";
@@ -52,6 +57,18 @@ in {
   inputs.nixpkgs.overlays = [
     #import ./overlays/default.nix
   ];
+
+  darwinConfigurations = {
+    air = inputs.darwin.lib.darwinSystem {
+      system = "aarch64-darwin";
+      modules = [
+        ./hosts/air/host.nix
+	#./config/cli-darwin.nix
+      ];
+    };
+  };
+
+
   packages.x86_64-linux = {
     vm = nixos-generators.nixosGenerate {
       system = "x86_64-linux";
