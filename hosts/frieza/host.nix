@@ -3,20 +3,20 @@
   nixpkgs.config.allowUnfree = true;
   boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usb_storage" "sd_mod" "amdgpu" "usbhid" ];  
   boot.initrd.kernelModules = [ "dm-snapshot" "amdgpu" ];
-  boot.kernelModules = [ "kvm-amd" ];
-  boot.extraModulePackages = [ ];
+  boot.kernelModules = [  "nvidia" "kvm-amd" ];
   boot.loader.grub.device = "nodev";
   
   ## Bootloader.
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot";
   # enable the nvidia driver
-  services.xserver.videoDrivers = [ "nvidia" ];
+  services.xserver.videoDrivers = [ "nvidia" "amdgpu" ];
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.stable;
   
   # SSD health
   #fileSystems."/".options = [ "noatime" "nodiratime" "discard" ];
 
+  boot.extraModulePackages = [ pkgs.linuxPackages.nvidia_x11 ];
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/e190b08d-cac6-44ee-9372-a0f8c4b163a8";
       fsType = "ext4";
