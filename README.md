@@ -10,4 +10,5 @@ Previously Inspired by [gytis-ivaskevicius](https://github.com/gytis-ivaskeviciu
 nixos-rebuild switch --use-remote-sudo --flake .#G7
 nixos-rebuild switch --use-remote-sudo --flake .#miBook
 nixos-rebuild switch --use-remote-sudo --flake .#frieza
+darwin-rebuild switch --flake .#air
 ```
