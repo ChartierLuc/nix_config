@@ -10,7 +10,7 @@
 
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 80 443 7860 6007];
+    allowedTCPPorts = [ 80 443 7860 6007 9090];
   };
 
   networking.extraHosts = ''
