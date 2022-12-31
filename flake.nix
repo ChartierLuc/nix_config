@@ -262,6 +262,9 @@ in {
 
         # Device is ssh server
         ./config/ssh-server.nix
+
+        # Device is dev machine
+        ./config/docker.nix
       
         ## Give access to network filestore
         #./config/file_access.nix
