@@ -4,6 +4,9 @@
   inputs = {
     nixpkgs.url = github:nixos/nixpkgs/nixos-unstable;
     unstable.follows = "nixpkgs";
+
+    dwarffs.url = "github:edolstra/dwarffs";
+
   
     nixpkgs-wayland  = {
       url = "github:nix-community/nixpkgs-wayland"; 
@@ -40,8 +43,7 @@
   };
 };
 
-outputs = inputs@{self, nixpkgs, home-manager,  nixos-generators, darwin, ...}:
-
+outputs = inputs@{self, nixpkgs, home-manager,  nixos-generators, darwin, dwarffs, ...}:
   let
   user = "luc";
   system = "x86_64-linux";
@@ -238,6 +240,7 @@ in {
     frieza = inputs.nixpkgs.lib.nixosSystem { 
       system = "x86_64-linux";
       modules = [
+        dwarffs.nixosModules.dwarffs
         home-manager.nixosModules.home-manager {
           home-manager.useGlobalPkgs = true; # instead of having its own private nixpkgs
           home-manager.useUserPackages = true; # install to /etc/profiles instead of ~/.nix-profile

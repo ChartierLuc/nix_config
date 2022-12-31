@@ -95,6 +95,7 @@
 
   environment.systemPackages = with pkgs; [
     bat
+    devbox
     tmux
     curl
     entr
