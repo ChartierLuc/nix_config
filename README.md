@@ -12,3 +12,8 @@ nixos-rebuild switch --use-remote-sudo --flake .#miBook
 nixos-rebuild switch --use-remote-sudo --flake .#frieza
 darwin-rebuild switch --flake .#air
 ```
+
+# Upgrade Flake
+```
+nix --extra-experimental-features flakes --extra-experimental-features nix-command flake update
+```
