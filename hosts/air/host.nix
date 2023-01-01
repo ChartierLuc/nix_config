@@ -2,8 +2,7 @@
 {
 
   environment.shells = [ pkgs.zsh ];
-  environment.systemPackages = 
-  [
+  environment.systemPackages = [
     pkgs.vim
     pkgs.git
     pkgs.synergyWithoutGUI
@@ -32,16 +31,16 @@
   };
   
   networking = {
-    computerName = "Luc's Air";
+    computerName = "Luc Air";
     hostName = "Air";
   };
 
   programs.tmux = {
     enable = true;
     #enableFzf = true;
-    enableMouse = true;
-    enableSensible = false;
-    enableVim = false;
+    #enableMouse = true;
+    #enableSensible = false;
+    #enableVim = false;
   };
 
   programs.zsh = {

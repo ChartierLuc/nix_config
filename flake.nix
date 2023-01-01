@@ -65,7 +65,7 @@ in {
       system = "aarch64-darwin";
       modules = [
         ./hosts/air/host.nix
-	#./config/cli-darwin.nix
+	      #./config/cli-darwin.nix
       ];
     };
   };
