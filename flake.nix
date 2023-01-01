@@ -2,12 +2,14 @@
   description = "Luc's nix configuration";
 
   inputs = {
+    ## Package sets
     nixpkgs.url = github:nixos/nixpkgs/nixos-unstable;
     unstable.follows = "nixpkgs";
 
+    #TODO: get this working
+    ## Allows gdb to look up debug info
     dwarffs.url = "github:edolstra/dwarffs";
 
-  
     nixpkgs-wayland  = {
       url = "github:nix-community/nixpkgs-wayland"; 
     };
@@ -37,10 +39,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-  darwin = {
-    url = "github:lnl7/nix-darwin/master";
-    inputs.nixpkgs.follows = "nixpkgs";
-  };
+    darwin = {
+      url = "github:lnl7/nix-darwin/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 };
 
 outputs = inputs@{self, nixpkgs, home-manager,  nixos-generators, darwin, dwarffs, ...}:
@@ -69,7 +71,6 @@ in {
       ];
     };
   };
-
 
   packages.x86_64-linux = {
     vm = nixos-generators.nixosGenerate {
