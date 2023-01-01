@@ -15,9 +15,9 @@
     pkgs.tikzit
     pkgs.tectonic
     pkgs.alacritty
-    #pkgs.texlive.combined.scheme-full
+    pkgs.texlive.combined.scheme-full
+    pkgs.ranger
   ];
-  #environment.variables = [];
 
   # Make sure the nix daemon always runs
   services.nix-daemon.enable = true;
@@ -32,7 +32,6 @@
     casks = [
       # "libsodium"
       # "cmake"
-      #"alacritty"
     ];
   };
   
@@ -54,5 +53,4 @@
   };
 
   security.pam.enableSudoTouchIdAuth = true;
-  
 }
