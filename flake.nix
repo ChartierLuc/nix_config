@@ -66,6 +66,11 @@ in {
     air = inputs.darwin.lib.darwinSystem {
       system = "aarch64-darwin";
       modules = [
+        home-manager.darwinModules.home-manager {
+          home-manager.useGlobalPkgs = true;
+          home-manager.useUserPackages = true;
+          home-manager.users.luc = import ./home-manager/luc-macos.nix;
+        }
         ./hosts/air/host.nix
 	      #./config/cli-darwin.nix
       ];
