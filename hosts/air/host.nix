@@ -1,6 +1,12 @@
 { config, pkgs, ... }:
 {
 
+  environment.variables = {
+    EDITOR = "vim";
+    LC_ALL = "en_US.UTF-8";
+    TERM = "xterm-256color";
+  };
+
   environment.shells = [ pkgs.zsh ];
   environment.systemPackages = [
     pkgs.vim
