@@ -19,6 +19,7 @@
     pkgs.ranger
     pkgs.ripgrep
     pkgs.yarn
+    pkgs.stripe-cli
   ];
 
   # Make sure the nix daemon always runs
@@ -34,7 +35,7 @@
     casks = [
       # "libsodium"
       # "cmake"
-      "stripe/stripe-cli/stripe"
+      # "stripe/stripe-cli/stripe"
     ];
   };
   
