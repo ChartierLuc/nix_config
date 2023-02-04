@@ -13,11 +13,12 @@
     NIXPKGS_ALLOW_UNFREE = 1;
   };
 
-  programs.vim = {
+  programs.neovim = {
     enable = true;
     plugins = with pkgs.vimPlugins; [
       vim-airline
       vim-nix
+      nerdtree
     ];
    extraConfig = ''
      set mouse=a

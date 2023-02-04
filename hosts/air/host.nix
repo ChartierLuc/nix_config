@@ -9,7 +9,7 @@
 
   environment.shells = [ pkgs.zsh ];
   environment.systemPackages = [
-    pkgs.vim
+    pkgs.neovim
     pkgs.git
     pkgs.synergyWithoutGUI
     pkgs.tikzit
@@ -17,6 +17,8 @@
     pkgs.alacritty
     pkgs.texlive.combined.scheme-full
     pkgs.ranger
+    pkgs.ripgrep
+    pkgs.yarn
   ];
 
   # Make sure the nix daemon always runs
@@ -32,6 +34,7 @@
     casks = [
       # "libsodium"
       # "cmake"
+      "stripe/stripe-cli/stripe"
     ];
   };
   
