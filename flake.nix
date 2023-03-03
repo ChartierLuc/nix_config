@@ -45,7 +45,7 @@
     };
 };
 
-outputs = inputs@{self, nixpkgs, home-manager,  nixos-generators, darwin, dwarffs, ...}:
+outputs = inputs@{self, nixpkgs, home-manager, agenix, nixos-generators, darwin, dwarffs, ...}:
   let
   user = "luc";
   system = "x86_64-linux";
@@ -71,8 +71,9 @@ in {
           home-manager.useUserPackages = true;
           home-manager.users.luc = import ./home-manager/luc-macos.nix;
         }
+        agenix.nixosModule
         ./hosts/air/host.nix
-	      #./config/cli-darwin.nix
+	#./config/cli-darwin.nix
       ];
     };
   };
