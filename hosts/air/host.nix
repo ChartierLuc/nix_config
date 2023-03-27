@@ -20,22 +20,32 @@
     pkgs.ripgrep
     pkgs.yarn
     pkgs.stripe-cli
+    pkgs.emacs
+    pkgs.supabase-cli
+    pkgs.docker
+    pkgs.docker-compose
   ];
 
   # Make sure the nix daemon always runs
   services.nix-daemon.enable = true;
+  services.activate-system.enable = true;
+  programs.nix-index.enable = true;
+  security.pam.enableSudoTouchIdAuth = true;
   # Installs a version of nix, that dosen't need "experimental-features = nix-command flakes" in /etc/nix/nix.conf
   #services.nix-daemon.package = pkgs.nixFlakes;
   nix.package = pkgs.nix;
+
+  # M1 Support
+  nix.extraOptions = ''
+    extra-platforms = aarch64-darwin x86_64-darwin
+    experimental-features = nix-command flakes
+  '';
 
   homebrew = {
     enable = true;
     onActivation.autoUpdate = true;
 
     casks = [
-      # "libsodium"
-      # "cmake"
-      # "stripe/stripe-cli/stripe"
     ];
   };
   
@@ -55,6 +65,4 @@
   programs.zsh = {
     enable = true; 
   };
-
-  security.pam.enableSudoTouchIdAuth = true;
 }

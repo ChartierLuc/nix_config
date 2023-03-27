@@ -3,7 +3,7 @@
 
   inputs = {
     ## Package sets
-    nixpkgs.url = github:nixos/nixpkgs/nixos-unstable;
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     unstable.follows = "nixpkgs";
 
     #TODO: get this working
@@ -43,44 +43,170 @@
       url = "github:lnl7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-};
-
-outputs = inputs@{self, nixpkgs, home-manager, agenix, nixos-generators, darwin, dwarffs, ...}:
-  let
-  user = "luc";
-  system = "x86_64-linux";
-  
-  pkgs = import nixpkgs {
-    config.allowUnfree = true;
-    # # TODO: Look at overlays
-    # overlays = [ ];
   };
 
-in {
-  # TODO: Look at overlays
-  inputs.nixpkgs.overlays = [
-    #import ./overlays/default.nix
-  ];
-
-  darwinConfigurations = {
-    air = inputs.darwin.lib.darwinSystem {
-      system = "aarch64-darwin";
-      modules = [
-        home-manager.darwinModules.home-manager {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.users.luc = import ./home-manager/luc-macos.nix;
-        }
-        agenix.nixosModule
-        ./hosts/air/host.nix
-	#./config/cli-darwin.nix
-      ];
+  outputs = inputs@{self, nixpkgs, home-manager, agenix, nixos-generators, darwin, dwarffs, ...}:
+    let
+    user = "luc";
+    
+    pkgs = import nixpkgs {
+      config.allowUnfree = true;
     };
-  };
 
-  packages.x86_64-linux = {
-    vm = nixos-generators.nixosGenerate {
-      system = "x86_64-linux";
+    localNixpkgsOverlay = self: super: {
+      nixpkgs = super.callPackage ../nixpkgs { };
+    };
+  in {
+
+    darwinConfigurations = {
+      air = let
+        pkgs = import nixpkgs {
+          system = "aarch64-darwin";
+          overlays = [ localNixpkgsOverlay ];
+        };
+      in inputs.darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
+        modules = [
+          home-manager.darwinModules.home-manager {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.luc = import ./home-manager/luc-macos.nix;
+          }
+          # agenix.nixosModules
+          ./hosts/air/host.nix
+          #./config/cli-darwin.nix
+        ];
+      };
+    };
+
+    packages.x86_64-linux = {
+      vm = nixos-generators.nixosGenerate {
+        system = "x86_64-linux";
+          modules = [
+            home-manager.nixosModules.home-manager {
+              home-manager.useGlobalPkgs = true; # instead of having its own private nixpkgs
+              home-manager.useUserPackages = true; # install to /etc/profiles instead of ~/.nix-profile
+              home-manager.extraSpecialArgs = {
+                inherit user; # pass user to modules in conf (home.nix or whatever)
+                configName = "miBook";
+              };
+              home-manager.users.luc = import ./home-manager/luc.nix;
+            }
+            # Hardware configuration
+            ./hosts/vm/host.nix
+
+            # Device is a personal laptop
+            #./config/vm.nix
+            ./config/personal.nix
+            ./config/cli.nix
+          
+            ## Give access to network filestore
+            #./config/file_access.nix
+        
+            ## Use X11 Gnome
+            #./config/desktop_env/gnome_xorg.nix
+            #./config/desktop_env/oled_gnome.nix
+
+            # Use Wayland Gnome
+            ./config/desktop_env/gnome.nix
+            # ./config/desktop_env/gnome_material_shell.nix
+          
+            ## Use Wayland Sway
+            #./config/desktop_env/sway.nix
+
+            # Use pipewire
+            ./module/audio.nix
+            # ./module/audio_bt.nix
+          ];
+          format = "vm";
+      };
+      vbox = nixos-generators.nixosGenerate {
+        system = "x86_64-linux";
+        modules = [
+            home-manager.nixosModules.home-manager {
+              home-manager.useGlobalPkgs = true; # instead of having its own private nixpkgs
+              home-manager.useUserPackages = true; # install to /etc/profiles instead of ~/.nix-profile
+              home-manager.extraSpecialArgs = {
+                inherit user; # pass user to modules in conf (home.nix or whatever)
+                configName = "miBook";
+              };
+              home-manager.users.luc = import ./home-manager/luc.nix;
+            }
+            # Hardware configuration
+            ./hosts/vm/host.nix
+
+            # Device is a personal laptop
+            #./config/vm.nix
+            ./config/personal.nix
+            ./config/cli.nix
+          
+            ## Give access to network filestore
+            #./config/file_access.nix
+        
+            ## Use X11 Gnome
+            #./config/desktop_env/gnome_xorg.nix
+            #./config/desktop_env/oled_gnome.nix
+
+            # Use Wayland Gnome
+            ./config/desktop_env/gnome.nix
+            # ./config/desktop_env/gnome_material_shell.nix
+          
+            ## Use Wayland Sway
+            #./config/desktop_env/sway.nix
+
+            # Use pipewire
+            ./module/audio.nix
+            # ./module/audio_bt.nix
+          ];
+        format = "virtualbox";
+      };
+    };
+
+    nixosConfigurations = {
+      linux-vm = inputs.nixpkgs.lib.nixosSystem { 
+        system = "x86_64-linux";
+        modules = [
+          home-manager.nixosModules.home-manager {
+            home-manager.useGlobalPkgs = true; # instead of having its own private nixpkgs
+            home-manager.useUserPackages = true; # install to /etc/profiles instead of ~/.nix-profile
+            home-manager.extraSpecialArgs = {
+              inherit user; # pass user to modules in conf (home.nix or whatever)
+              configName = "miBook";
+            };
+            home-manager.users.luc = import ./home-manager/luc.nix;
+          }
+            <nixpkgs/nixos/modules/virtualisation/qemu-vm.nix> 
+            # Hardware configuration
+            ./hosts/vm/host.nix
+
+            # Device is a personal laptop
+            ./config/vm.nix
+            ./config/personal.nix
+            ./config/cli.nix
+          
+            ## Give access to network filestore
+            #./config/file_access.nix
+        
+            ## Use X11 Gnome
+            #./config/desktop_env/gnome_xorg.nix
+            #./config/desktop_env/oled_gnome.nix
+
+            # Use Wayland Gnome
+            ./config/desktop_env/gnome.nix
+            # ./config/desktop_env/gnome_material_shell.nix
+          
+            ## Use Wayland Sway
+            #./config/desktop_env/sway.nix
+
+            # Use pipewire
+            ./module/audio.nix
+            # ./module/audio_bt.nix
+        ];
+        specialArgs = { inherit inputs; };
+      };
+
+      miBook = inputs.nixpkgs.lib.nixosSystem { 
+        system = "x86_64-linux";
         modules = [
           home-manager.nixosModules.home-manager {
             home-manager.useGlobalPkgs = true; # instead of having its own private nixpkgs
@@ -92,10 +218,10 @@ in {
             home-manager.users.luc = import ./home-manager/luc.nix;
           }
           # Hardware configuration
-          ./hosts/vm/host.nix
+          ./hosts/miBook/host.nix
 
           # Device is a personal laptop
-          #./config/vm.nix
+          ./config/base-desktop.nix
           ./config/personal.nix
           ./config/cli.nix
         
@@ -108,7 +234,6 @@ in {
 
           # Use Wayland Gnome
           ./config/desktop_env/gnome.nix
-          # ./config/desktop_env/gnome_material_shell.nix
         
           ## Use Wayland Sway
           #./config/desktop_env/sway.nix
@@ -117,27 +242,37 @@ in {
           ./module/audio.nix
           # ./module/audio_bt.nix
         ];
-        format = "vm";
-    };
-    vbox = nixos-generators.nixosGenerate {
-      system = "x86_64-linux";
-      modules = [
+        specialArgs = { inherit inputs; };
+      };
+
+      frieza = inputs.nixpkgs.lib.nixosSystem { 
+        system = "x86_64-linux";
+        modules = [
+          dwarffs.nixosModules.dwarffs
           home-manager.nixosModules.home-manager {
             home-manager.useGlobalPkgs = true; # instead of having its own private nixpkgs
             home-manager.useUserPackages = true; # install to /etc/profiles instead of ~/.nix-profile
             home-manager.extraSpecialArgs = {
               inherit user; # pass user to modules in conf (home.nix or whatever)
-              configName = "miBook";
+              configName = "frieza";
             };
             home-manager.users.luc = import ./home-manager/luc.nix;
           }
           # Hardware configuration
-          ./hosts/vm/host.nix
+          ./hosts/frieza/host.nix
+          ./config/weylus.nix
 
           # Device is a personal laptop
-          #./config/vm.nix
+          ./config/base-desktop.nix
           ./config/personal.nix
           ./config/cli.nix
+          ./config/dev.nix 
+
+          # Device is ssh server
+          ./config/ssh-server.nix
+
+          # Device is dev machine
+          ./config/docker.nix
         
           ## Give access to network filestore
           #./config/file_access.nix
@@ -148,186 +283,52 @@ in {
 
           # Use Wayland Gnome
           ./config/desktop_env/gnome.nix
-          # ./config/desktop_env/gnome_material_shell.nix
         
           ## Use Wayland Sway
           #./config/desktop_env/sway.nix
 
           # Use pipewire
           ./module/audio.nix
-          # ./module/audio_bt.nix
         ];
-      format = "virtualbox";
-    };
-  };
+        specialArgs = { inherit inputs; };
+      };
 
-  nixosConfigurations = {
-    linux-vm = inputs.nixpkgs.lib.nixosSystem { 
-      system = "x86_64-linux";
-      modules = [
-        home-manager.nixosModules.home-manager {
-          home-manager.useGlobalPkgs = true; # instead of having its own private nixpkgs
-          home-manager.useUserPackages = true; # install to /etc/profiles instead of ~/.nix-profile
-          home-manager.extraSpecialArgs = {
-            inherit user; # pass user to modules in conf (home.nix or whatever)
-            configName = "miBook";
-          };
-          home-manager.users.luc = import ./home-manager/luc.nix;
-        }
-          <nixpkgs/nixos/modules/virtualisation/qemu-vm.nix> 
+      G7 = inputs.nixpkgs.lib.nixosSystem { 
+        system = "x86_64-linux";
+        modules = [
+          home-manager.nixosModules.home-manager {
+            home-manager.useGlobalPkgs = true; # instead of having its own private nixpkgs
+            home-manager.useUserPackages = true; # install to /etc/profiles instead of ~/.nix-profile
+            home-manager.extraSpecialArgs = {
+              inherit user; # pass user to modules in conf (home.nix or whatever)
+              configName = "G7";
+            };
+            home-manager.users.luc = import ./home-manager/luc.nix;
+          }
           # Hardware configuration
-          ./hosts/vm/host.nix
+          ./hosts/G7/host.nix
+          ./config/common.nix
 
           # Device is a personal laptop
-          ./config/vm.nix
+          ./config/base-desktop.nix
           ./config/personal.nix
           ./config/cli.nix
-        
+      
           ## Give access to network filestore
           #./config/file_access.nix
-      
-          ## Use X11 Gnome
-          #./config/desktop_env/gnome_xorg.nix
-          #./config/desktop_env/oled_gnome.nix
+    
+          # Use X11 Gnome
+          ./config/desktop_env/xorg.nix
+          ./config/desktop_env/oled_gnome.nix
 
-          # Use Wayland Gnome
-          ./config/desktop_env/gnome.nix
-          # ./config/desktop_env/gnome_material_shell.nix
-        
-          ## Use Wayland Sway
-          #./config/desktop_env/sway.nix
+          ## Use Wayland Wayfire
+          #./module/wayfire.nix
 
           # Use pipewire
           ./module/audio.nix
-          # ./module/audio_bt.nix
-      ];
-      specialArgs = { inherit inputs; };
-    };
-
-    miBook = inputs.nixpkgs.lib.nixosSystem { 
-      system = "x86_64-linux";
-      modules = [
-        home-manager.nixosModules.home-manager {
-          home-manager.useGlobalPkgs = true; # instead of having its own private nixpkgs
-          home-manager.useUserPackages = true; # install to /etc/profiles instead of ~/.nix-profile
-          home-manager.extraSpecialArgs = {
-            inherit user; # pass user to modules in conf (home.nix or whatever)
-            configName = "miBook";
-          };
-          home-manager.users.luc = import ./home-manager/luc.nix;
-        }
-        # Hardware configuration
-        ./hosts/miBook/host.nix
-
-        # Device is a personal laptop
-        ./config/base-desktop.nix
-        ./config/personal.nix
-        ./config/cli.nix
-      
-        ## Give access to network filestore
-        #./config/file_access.nix
-    
-        ## Use X11 Gnome
-        #./config/desktop_env/gnome_xorg.nix
-        #./config/desktop_env/oled_gnome.nix
-
-        # Use Wayland Gnome
-        ./config/desktop_env/gnome.nix
-      
-        ## Use Wayland Sway
-        #./config/desktop_env/sway.nix
-
-        # Use pipewire
-        ./module/audio.nix
-        # ./module/audio_bt.nix
-      ];
-      specialArgs = { inherit inputs; };
-    };
-
-    frieza = inputs.nixpkgs.lib.nixosSystem { 
-      system = "x86_64-linux";
-      modules = [
-        dwarffs.nixosModules.dwarffs
-        home-manager.nixosModules.home-manager {
-          home-manager.useGlobalPkgs = true; # instead of having its own private nixpkgs
-          home-manager.useUserPackages = true; # install to /etc/profiles instead of ~/.nix-profile
-          home-manager.extraSpecialArgs = {
-            inherit user; # pass user to modules in conf (home.nix or whatever)
-            configName = "frieza";
-          };
-          home-manager.users.luc = import ./home-manager/luc.nix;
-        }
-        # Hardware configuration
-        ./hosts/frieza/host.nix
-        ./config/weylus.nix
-
-        # Device is a personal laptop
-        ./config/base-desktop.nix
-        ./config/personal.nix
-        ./config/cli.nix
-        ./config/dev.nix 
-
-        # Device is ssh server
-        ./config/ssh-server.nix
-
-        # Device is dev machine
-        ./config/docker.nix
-      
-        ## Give access to network filestore
-        #./config/file_access.nix
-    
-        ## Use X11 Gnome
-        #./config/desktop_env/gnome_xorg.nix
-        #./config/desktop_env/oled_gnome.nix
-
-        # Use Wayland Gnome
-        ./config/desktop_env/gnome.nix
-      
-        ## Use Wayland Sway
-        #./config/desktop_env/sway.nix
-
-        # Use pipewire
-        ./module/audio.nix
-      ];
-      specialArgs = { inherit inputs; };
-    };
-
-    G7 = inputs.nixpkgs.lib.nixosSystem { 
-      system = "x86_64-linux";
-      modules = [
-        home-manager.nixosModules.home-manager {
-          home-manager.useGlobalPkgs = true; # instead of having its own private nixpkgs
-          home-manager.useUserPackages = true; # install to /etc/profiles instead of ~/.nix-profile
-          home-manager.extraSpecialArgs = {
-            inherit user; # pass user to modules in conf (home.nix or whatever)
-            configName = "G7";
-          };
-          home-manager.users.luc = import ./home-manager/luc.nix;
-        }
-        # Hardware configuration
-        ./hosts/G7/host.nix
-        ./config/common.nix
-
-        # Device is a personal laptop
-        ./config/base-desktop.nix
-        ./config/personal.nix
-        ./config/cli.nix
-    
-        ## Give access to network filestore
-        #./config/file_access.nix
-  
-        # Use X11 Gnome
-        ./config/desktop_env/xorg.nix
-        ./config/desktop_env/oled_gnome.nix
-
-        ## Use Wayland Wayfire
-        #./module/wayfire.nix
-
-        # Use pipewire
-        ./module/audio.nix
-      ];
-      specialArgs = { inherit inputs; };
+        ];
+        specialArgs = { inherit inputs; };
+      };
     };
   };
-};
 }
