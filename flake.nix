@@ -11,7 +11,7 @@
     dwarffs.url = "github:edolstra/dwarffs";
 
     nixpkgs-wayland  = {
-      url = "github:nix-community/nixpkgs-wayland"; 
+      url = "github:nix-community/nixpkgs-wayland";
     };
 
     ## home-manager pins nixpkgs to a specific version in its flake.
@@ -48,7 +48,7 @@
   outputs = inputs@{self, nixpkgs, home-manager, agenix, nixos-generators, darwin, dwarffs, ...}:
     let
     user = "luc";
-    
+
     pkgs = import nixpkgs {
       config.allowUnfree = true;
     };
@@ -79,6 +79,30 @@
       };
     };
 
+    ## Cloud server configs
+    ## Let's fucking go!!!
+    cloudServerConfig = {
+      lfg = let
+        pkgs = import nixpkgs {
+            system = "x86_64-linux";
+            # overlays = [ localNixpkgsOverlay ];
+        };
+      in inputs.darwin.lib.darwinSystem {
+        system = "aarch64-darwin";
+        modules = [
+          home-manager.darwinModules.home-manager {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.lfg = import ./home-manager/lfg.nix;
+          }
+          # agenix.nixosModules
+          # ./hosts/air/host.nix
+          #./config/cli-darwin.nix
+          ./hosts/cli.nix
+        ];
+      };
+    };
+
     packages.x86_64-linux = {
       vm = nixos-generators.nixosGenerate {
         system = "x86_64-linux";
@@ -99,10 +123,10 @@
             #./config/vm.nix
             ./config/personal.nix
             ./config/cli.nix
-          
+
             ## Give access to network filestore
             #./config/file_access.nix
-        
+
             ## Use X11 Gnome
             #./config/desktop_env/gnome_xorg.nix
             #./config/desktop_env/oled_gnome.nix
@@ -110,7 +134,7 @@
             # Use Wayland Gnome
             ./config/desktop_env/gnome.nix
             # ./config/desktop_env/gnome_material_shell.nix
-          
+
             ## Use Wayland Sway
             #./config/desktop_env/sway.nix
 
@@ -139,10 +163,10 @@
             #./config/vm.nix
             ./config/personal.nix
             ./config/cli.nix
-          
+
             ## Give access to network filestore
             #./config/file_access.nix
-        
+
             ## Use X11 Gnome
             #./config/desktop_env/gnome_xorg.nix
             #./config/desktop_env/oled_gnome.nix
@@ -150,7 +174,7 @@
             # Use Wayland Gnome
             ./config/desktop_env/gnome.nix
             # ./config/desktop_env/gnome_material_shell.nix
-          
+
             ## Use Wayland Sway
             #./config/desktop_env/sway.nix
 
@@ -163,7 +187,7 @@
     };
 
     nixosConfigurations = {
-      linux-vm = inputs.nixpkgs.lib.nixosSystem { 
+      linux-vm = inputs.nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           home-manager.nixosModules.home-manager {
@@ -175,7 +199,7 @@
             };
             home-manager.users.luc = import ./home-manager/luc.nix;
           }
-            <nixpkgs/nixos/modules/virtualisation/qemu-vm.nix> 
+            <nixpkgs/nixos/modules/virtualisation/qemu-vm.nix>
             # Hardware configuration
             ./hosts/vm/host.nix
 
@@ -183,10 +207,10 @@
             ./config/vm.nix
             ./config/personal.nix
             ./config/cli.nix
-          
+
             ## Give access to network filestore
             #./config/file_access.nix
-        
+
             ## Use X11 Gnome
             #./config/desktop_env/gnome_xorg.nix
             #./config/desktop_env/oled_gnome.nix
@@ -194,7 +218,7 @@
             # Use Wayland Gnome
             ./config/desktop_env/gnome.nix
             # ./config/desktop_env/gnome_material_shell.nix
-          
+
             ## Use Wayland Sway
             #./config/desktop_env/sway.nix
 
@@ -205,7 +229,7 @@
         specialArgs = { inherit inputs; };
       };
 
-      miBook = inputs.nixpkgs.lib.nixosSystem { 
+      miBook = inputs.nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           home-manager.nixosModules.home-manager {
@@ -224,17 +248,17 @@
           ./config/base-desktop.nix
           ./config/personal.nix
           ./config/cli.nix
-        
+
           ## Give access to network filestore
           #./config/file_access.nix
-      
+
           ## Use X11 Gnome
           #./config/desktop_env/gnome_xorg.nix
           #./config/desktop_env/oled_gnome.nix
 
           # Use Wayland Gnome
           ./config/desktop_env/gnome.nix
-        
+
           ## Use Wayland Sway
           #./config/desktop_env/sway.nix
 
@@ -245,7 +269,7 @@
         specialArgs = { inherit inputs; };
       };
 
-      frieza = inputs.nixpkgs.lib.nixosSystem { 
+      frieza = inputs.nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           dwarffs.nixosModules.dwarffs
@@ -266,24 +290,24 @@
           ./config/base-desktop.nix
           ./config/personal.nix
           ./config/cli.nix
-          ./config/dev.nix 
+          ./config/dev.nix
 
           # Device is ssh server
           ./config/ssh-server.nix
 
           # Device is dev machine
           ./config/docker.nix
-        
+
           ## Give access to network filestore
           #./config/file_access.nix
-      
+
           ## Use X11 Gnome
           #./config/desktop_env/gnome_xorg.nix
           #./config/desktop_env/oled_gnome.nix
 
           # Use Wayland Gnome
           ./config/desktop_env/gnome.nix
-        
+
           ## Use Wayland Sway
           #./config/desktop_env/sway.nix
 
@@ -293,7 +317,7 @@
         specialArgs = { inherit inputs; };
       };
 
-      G7 = inputs.nixpkgs.lib.nixosSystem { 
+      G7 = inputs.nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
         modules = [
           home-manager.nixosModules.home-manager {
@@ -313,10 +337,10 @@
           ./config/base-desktop.nix
           ./config/personal.nix
           ./config/cli.nix
-      
+
           ## Give access to network filestore
           #./config/file_access.nix
-    
+
           # Use X11 Gnome
           ./config/desktop_env/xorg.nix
           ./config/desktop_env/oled_gnome.nix

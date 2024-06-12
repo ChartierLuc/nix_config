@@ -1,7 +1,7 @@
 { pkgs, lib, config, langchain-nvim, ... }:
 let
   langchainPlugin = pkgs.callPackage /Users/luc/code/langchain-nvim/default.nix {};
-  langchain = pkgs.callPackage /Users/luc/code/langchain-nvim/langchain.nix { 
+  langchain = pkgs.callPackage /Users/luc/code/langchain-nvim/langchain.nix {
     buildPythonPackage=pkgs.python3Packages.buildPythonPackage;
     tenacity = pkgs.python310Packages.tenacity;
     dataclasses-json = pkgs.python310Packages.dataclasses-json;
@@ -24,7 +24,7 @@ in
   # https://rycee.gitlab.io/home-manager/options.html#opt-programs.htop.enable
   programs.htop.enable = true;
   programs.htop.settings.show_program_path = true;
-  
+
   home.sessionVariables = {
     TERMINAL = "alacritty";
     NIXPKGS_ALLOW_UNFREE = 1;
@@ -43,19 +43,6 @@ in
     '';
     withPython3 = true;
     extraPython3Packages = ps: [langchain ];
-  };
-
-  programs.git = {
-    aliases = {
-      lg = "lg1";
-      lg1 = "lg1-specific --all";
-      lg2 = "lg2-specific --all";
-      lg3 = "lg3-specific --all";
-
-      lg1-specific = "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(auto)%d%C(reset)'";
-      lg2-specific = "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)'";
-      lg3-specific = "log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset) %C(bold cyan)(committed: %cD)%C(reset) %C(auto)%d%C(reset)%n''          %C(white)%s%C(reset)%n''          %C(dim white)- %an <%ae> %C(reset) %C(dim white)(committer: %cn <%ce>)%C(reset)'";
-    };
   };
 
   home.packages = with pkgs; [
