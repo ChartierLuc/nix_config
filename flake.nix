@@ -81,22 +81,20 @@
 
     ## Cloud server configs
     ## Let's fucking go!!!
-    cloudServerConfig = {
-        lfg = let
-            system = "x86_64-linux";
-            pkgs = nixpkgs.legacyPackages.${system};
-        in {
-            homeConfigurations.ubuntu = home-manager.lib.homeManagerConfiguration {
-            inherit pkgs;
-
-            # Specify your home configuration modules here, for example,
-            # the path to your home.nix.
-            modules = [ ./home-manager/lfg.nix ];
-
-            # Optionally use extraSpecialArgs
-            # to pass through arguments to home.nix
-            };
-        };
+    lfg = home-manager.lib.homeManagerConfiguration {
+      pkgs = import nixpkgs {
+        system = "x86_64-linux";
+        inherit overlays;
+      };
+      modules = [
+        ./home-manager/lfg.nix
+        {
+          home = {
+            username = "ubuntu";
+            homeDirectory = "/home/ubuntu";
+          };
+        }
+      ];
     };
 
     packages.x86_64-linux = {
