@@ -95,7 +95,7 @@
           };
         }
       ];
-    };
+    };g
 
     packages.x86_64-linux = {
       vm = nixos-generators.nixosGenerate {
