@@ -82,7 +82,7 @@
     ## Cloud server configs
     ## Let's fucking go!!!
     cloudServerConfig = {
-        let
+        lfg = let
             system = "x86_64-linux";
             pkgs = nixpkgs.legacyPackages.${system};
         in {
