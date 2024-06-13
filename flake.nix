@@ -84,7 +84,6 @@
     lfg = home-manager.lib.homeManagerConfiguration {
       pkgs = import nixpkgs {
         system = "x86_64-linux";
-        inherit overlays;
       };
       modules = [
         ./home-manager/lfg.nix
