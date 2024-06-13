@@ -82,25 +82,21 @@
     ## Cloud server configs
     ## Let's fucking go!!!
     cloudServerConfig = {
-      lfg = let
-        pkgs = import nixpkgs {
+        lfg = let
             system = "x86_64-linux";
-            # overlays = [ localNixpkgsOverlay ];
+            pkgs = nixpkgs.legacyPackages.${system};
+        in {
+            homeConfigurations.lfg = home-manager.lib.homeManagerConfiguration {
+            inherit pkgs;
+
+            # Specify your home configuration modules here, for example,
+            # the path to your home.nix.
+            modules = [ ./home-manager/lfg.nix ./hosts/cli.nix ];
+
+            # Optionally use extraSpecialArgs
+            # to pass through arguments to home.nix
+            };
         };
-      in inputs.darwin.lib.darwinSystem {
-        system = "aarch64-darwin";
-        modules = [
-          home-manager.darwinModules.home-manager {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.users.lfg = import ./home-manager/lfg.nix;
-          }
-          # agenix.nixosModules
-          # ./hosts/air/host.nix
-          #./config/cli-darwin.nix
-          ./hosts/cli.nix
-        ];
-      };
     };
 
     packages.x86_64-linux = {
